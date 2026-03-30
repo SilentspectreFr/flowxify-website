@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flowxify — Accompagnement des dirigeants de PME : pilotage, structuration et outils. Retrouvez une vision claire de votre activité grâce à une information fiable, lisible et utile pour décider.">
+    <title>Flowxify — Pilotage, structuration et outils pour dirigeants de PME</title>
+
+    <link rel="canonical" href="https://flowxify.com/">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://flowxify.com/">
+    <meta property="og:title" content="Flowxify — Retrouver une vision claire de votre activité">
+    <meta property="og:description" content="J'aide les dirigeants de PME à clarifier ce qui doit être suivi, fiabiliser les informations utiles et aligner les outils sur la réalité de l'entreprise.">
+    <meta property="og:image" content="https://flowxify.com/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Flowxify">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Flowxify — Retrouver une vision claire de votre activité">
+    <meta name="twitter:description" content="J'aide les dirigeants de PME à clarifier ce qui doit être suivi, fiabiliser les informations utiles et aligner les outils sur la réalité de l'entreprise.">
+    <meta name="twitter:image" content="https://flowxify.com/og-image.png">
+
+    <!-- Fonts: DM Serif Display (titres) + Source Sans 3 (corps) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #FFFFFF;
+            --color-bg-alt: #F9FAFB;
+            --color-text: #1A1A2E;
+            --color-muted: #6B7280;
+            --color-accent: #1E2A78;
+            --color-accent-hover: #162060;
+            --color-warm: #C85A30;
+            --color-border: #E5E7EB;
+            --font-heading: 'DM Serif Display', Georgia, serif;
+            --font-body: 'Source Sans 3', 'Georgia', sans-serif;
+            --max-width: 820px;
+            --section-py: 5rem;
+            --section-px: 2rem;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 18px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+            padding: 0.9rem var(--section-px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-logo {
+            height: 64px;
+            width: auto;
+        }
+
+        nav a.nav-cta {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border: 1.5px solid var(--color-accent);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a.nav-cta:hover {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(30, 42, 120, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* ── LAYOUT ── */
+        section {
+            padding: var(--section-py) var(--section-px);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 3.4rem;
+            line-height: 1.2;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--color-warm);
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            line-height: 1.3;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            color: var(--color-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .sep {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-warm));
+            margin-bottom: 1.5rem;
+            border-radius: 1px;
+        }
+
+        .section-alt {
+            background: var(--color-bg-alt);
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: white;
+            background: var(--color-warm);
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(30, 42, 120, 0.25);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 9rem var(--section-px) 5rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(30, 42, 120, 0.04) 0%, rgba(200, 90, 48, 0.02) 50%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-orb 20s ease-in-out infinite;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 20px); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--color-muted);
+            max-width: 680px;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .credibility {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .qualification {
+            font-size: 0.98rem;
+            color: var(--color-text);
+            max-width: 680px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Hero entrance animation */
+        .hero h1,
+        .hero .subtitle,
+        .hero .credibility,
+        .hero .qualification,
+        .hero .btn-primary {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: slide-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .hero .subtitle      { animation-delay: 0.2s; }
+        .hero .credibility    { animation-delay: 0.35s; }
+        .hero .qualification  { animation-delay: 0.45s; }
+        .hero .btn-primary    { animation-delay: 0.6s; }
+
+        @keyframes slide-up {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── PAIN POINTS ── */
+        .pain-points {
+            margin-top: 1.5rem;
+        }
+
+        .pain-point {
+            padding: 1.25rem 0 1.25rem 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            position: relative;
+            transition: padding-left 0.3s ease;
+        }
+
+        .pain-point::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--color-warm);
+            border-radius: 2px;
+            transition: height 0.35s ease;
+        }
+
+        .pain-point:hover::before { height: 60%; }
+        .pain-point:hover { padding-left: 1.5rem; }
+        .pain-point:last-child { border-bottom: none; }
+
+        /* ── PARTI-PRIS ── */
+        .partipris-quote {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            line-height: 1.5;
+            color: var(--color-text);
+            border-left: 3px solid transparent;
+            border-image: linear-gradient(180deg, var(--color-accent), var(--color-warm)) 1;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* ── MÉTHODE ── */
+        .method-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .method-step {
+            padding: 2rem;
+            border-radius: 12px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .method-step:hover {
+            background: var(--color-bg-alt);
+            border-color: rgba(200, 90, 48, 0.2);
+        }
+
+        .method-number {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-warm));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        .method-step h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .method-result {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-accent);
+            margin-top: 0.75rem;
+        }
+
+        /* ── INCARNATION ── */
+        .incarnation p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .incarnation p:first-of-type {
+            color: var(--color-text);
+        }
+
+        .markers {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .marker {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+            padding: 0.6rem 1.2rem;
+            border-left: 2px solid var(--color-accent);
+            background: rgba(30, 42, 120, 0.05);
+            border-radius: 0 6px 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        .marker:hover {
+            background: rgba(30, 42, 120, 0.08);
+            color: var(--color-text);
+            transform: translateX(4px);
+        }
+
+        /* ── TÉMOIGNAGE ── */
+        .testimonial {
+            text-align: center;
+            position: relative;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .testimonial::before {
+            content: '\u00AB';
+            font-family: var(--font-heading);
+            font-size: 6rem;
+            line-height: 1;
+            color: rgba(30, 42, 120, 0.06);
+            position: absolute;
+            top: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .testimonial-text {
+            font-family: var(--font-heading);
+            font-style: italic;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: block;
+            font-style: normal;
+        }
+
+        .testimonial-name {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-variant: small-caps;
+            letter-spacing: 0.05em;
+            color: var(--color-text);
+        }
+
+        .testimonial-role {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            margin-top: 0.2rem;
+        }
+
+        /* ── MODALITÉS ── */
+        .modalites-list {
+            margin-top: 1.5rem;
+        }
+
+        .modalite-item {
+            padding: 1.15rem 0 1.15rem 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-muted);
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .modalite-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .modalite-item:hover::before {
+            background: var(--color-warm);
+            box-shadow: 0 0 8px rgba(200, 90, 48, 0.3);
+        }
+
+        .modalite-item:hover { color: var(--color-text); }
+        .modalite-item:last-child { border-bottom: none; }
+
+        .who-its-for {
+            margin-top: 2rem;
+            padding: 1.75rem;
+            background: #FFFFFF;
+            border: 1px solid var(--color-border);
+            border-left: 3px solid transparent;
+            border-radius: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .who-its-for:hover {
+            border-left-color: var(--color-warm);
+        }
+
+        .who-its-for p { margin-bottom: 0.75rem; }
+        .who-its-for p:last-child { margin-bottom: 0; }
+
+        /* ── CTA FINAL ── */
+        .cta-final {
+            text-align: center;
+            padding: var(--section-py) var(--section-px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(30, 42, 120, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-final .container { position: relative; z-index: 1; }
+        .cta-final h2 { margin-bottom: 1rem; }
+        .cta-final p { max-width: 500px; margin: 0 auto 2rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem var(--section-px);
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+        }
+
+        footer a {
+            color: var(--color-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover { color: var(--color-accent); }
+
+        .footer-links {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            margin: 0 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .footer-info {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+        }
+
+        .footer-info span::before {
+            content: ' · ';
+        }
+
+        .footer-info span:first-child::before {
+            content: none;
+        }
+
+        /* ── ANIMATIONS (scroll) ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in.visible :is(.method-step, .pain-point, .modalite-item) {
+            opacity: 0;
+            animation: stagger-in 0.6s ease forwards;
+        }
+
+        .fade-in.visible :is(.method-step, .pain-point, .modalite-item):nth-child(1) { animation-delay: 0.1s; }
+        .fade-in.visible :is(.method-step, .pain-point, .modalite-item):nth-child(2) { animation-delay: 0.2s; }
+        .fade-in.visible :is(.method-step, .pain-point, .modalite-item):nth-child(3) { animation-delay: 0.3s; }
+        .fade-in.visible :is(.pain-point, .modalite-item):nth-child(4) { animation-delay: 0.4s; }
+        .fade-in.visible .modalite-item:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes stagger-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (min-width: 768px) {
+            .method-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            :root {
+                --section-py: 3.5rem;
+                --section-px: 1.5rem;
+            }
+
+            html { font-size: 16px; }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+
+            .hero {
+                padding-top: 7rem;
+                padding-bottom: 3.5rem;
+            }
+
+            .hero::before {
+                width: 350px;
+                height: 350px;
+            }
+
+            nav {
+                padding: 0.8rem 1.25rem;
+            }
+
+            .nav-logo { height: 48px; }
+            .partipris-quote { font-size: 1.3rem; }
+            .method-step { padding: 1.5rem; }
+            .markers { flex-direction: column; gap: 1rem; }
+
+            .testimonial::before { font-size: 4rem; }
+            .testimonial-text { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav>
+    <img src="logo.png" alt="Flowxify" class="nav-logo">
+    <a href="#contact" class="nav-cta">Prendre rendez-vous</a>
+</nav>
+
+<main>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero" id="top">
+    <div class="container">
+        <h1>Retrouver une vision <em>claire</em><br>de votre activité.</h1>
+        <p class="subtitle">
+            Quand les bonnes informations n'arrivent pas au bon moment, le dirigeant finit par piloter à l'instinct.
+            J'aide les dirigeants de PME à clarifier ce qui doit être suivi, fiabiliser les informations utiles
+            et aligner les outils sur la réalité de l'entreprise — pour décider avec plus de justesse et moins de retard.
+        </p>
+        <p class="credibility">Frédéric Jouvin — 20 ans de direction commerciale et générale, puis 4 ans à la tête d'une PME en transformation.</p>
+        <p class="qualification">J'interviens surtout quand l'activité devient plus complexe à piloter : croissance, réorganisation, outils qui s'empilent, données dispersées, décisions ralenties faute de visibilité.</p>
+        <a href="#contact" class="btn-primary">Faire le point sur votre situation</a>
+    </div>
+</section>
+
+<!-- ════════════════ PROBLÈME ════════════════ -->
+<section class="section-alt" id="constat">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>Quand l'activité se complexifie, le pilotage se brouille.</h2>
+        <p>La plupart des dirigeants que j'accompagne ne manquent ni d'énergie ni d'implication. Le vrai problème est ailleurs : à mesure que l'entreprise avance, l'information se disperse, se décale ou perd en fiabilité. On continue d'agir, mais avec moins de lisibilité sur la réalité.</p>
+        <div class="pain-points">
+            <div class="pain-point">Vous prenez des décisions importantes sans avoir les bonnes informations au bon moment.</div>
+            <div class="pain-point">Vos équipes passent trop de temps à chercher, recouper ou ressaisir des données.</div>
+            <div class="pain-point">On vous parle d'outils ou de logiciels avant même d'avoir clarifié ce qu'il faut vraiment suivre.</div>
+            <div class="pain-point">Vous découvrez en fin de mois — parfois bien plus tard — que la situation réelle n'était pas celle que vous pensiez.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ PARTI-PRIS ════════════════ -->
+<section id="approche">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>D'abord le pilotage. Ensuite seulement les outils.</h2>
+        <p>Quand un dirigeant manque de visibilité, le réflexe est souvent d'ajouter un outil, un reporting ou un tableau de plus. En pratique, cela aggrave souvent le problème. Tant que les décisions à prendre, les informations utiles et les zones d'incertitude ne sont pas clarifiées, l'outil ne règle rien.</p>
+        <div class="partipris-quote">
+            Mon travail consiste d'abord à clarifier les décisions à prendre, les informations
+            vraiment utiles pour les prendre, et les points où l'information se perd, se déforme
+            ou arrive trop tard. La question des outils vient ensuite.
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ MÉTHODE ════════════════ -->
+<section class="section-alt" id="methode">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>Une méthode simple, en trois étapes.</h2>
+        <div class="method-grid">
+            <div class="method-step">
+                <div class="method-number">01</div>
+                <h3>Clarifier</h3>
+                <p>Faire le tri entre ce qu'il est utile de suivre et ce qui encombre. Identifier les décisions importantes à piloter et les quelques indicateurs qui permettent vraiment d'y voir clair.</p>
+                <p class="method-result">→ Vous savez enfin sur quoi vous appuyer pour décider.</p>
+            </div>
+            <div class="method-step">
+                <div class="method-number">02</div>
+                <h3>Structurer</h3>
+                <p>Rendre l'information fiable et exploitable : supprimer les doubles saisies, recaler les sources, réduire les écarts et les retards. Les outils ne sont revus que si c'est nécessaire.</p>
+                <p class="method-result">→ Vous disposez d'informations cohérentes, au bon moment.</p>
+            </div>
+            <div class="method-step">
+                <div class="method-number">03</div>
+                <h3>Stabiliser</h3>
+                <p>Faire en sorte que l'organisation tienne dans le temps : équipes alignées, fonctionnement compris, usage installé dans le quotidien. L'objectif n'est pas de créer une dépendance, mais un pilotage qui reste en place.</p>
+                <p class="method-result">→ Cela fonctionne durablement, sans reposer sur vous en permanence.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ INCARNATION ════════════════ -->
+<section id="parcours" class="incarnation">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>De dirigeant à dirigeant.</h2>
+        <p>
+            Avant d'accompagner des dirigeants, j'ai exercé pendant plus de vingt ans des fonctions
+            de direction commerciale et générale, en PME comme dans des structures plus établies.
+            J'ai ensuite dirigé pendant quatre ans un laboratoire réalisant 3 à 5 millions d'euros
+            de chiffre d'affaires, avec des sujets très concrets de redressement, d'organisation
+            et de fiabilisation du pilotage.
+        </p>
+        <p>
+            Cette expérience m'a appris une chose simple : on ne dirige pas correctement avec des
+            chiffres partiels, des informations en retard ou des outils mal calés sur la réalité
+            de l'entreprise. Mon travail consiste à remettre de la clarté là où le pilotage
+            s'est brouillé.
+        </p>
+        <div class="markers">
+            <div class="marker">20+ ans de direction</div>
+            <div class="marker">4 ans à la tête d'une PME</div>
+            <div class="marker">Terrain avant outils</div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ TÉMOIGNAGE ════════════════ -->
+<section id="temoignage">
+    <div class="container fade-in">
+        <blockquote class="testimonial">
+            <p class="testimonial-text">"Les équipes Flowxify démocratisent de façon déconcertante l'automatisation optimale des flux d'informations et la gestion de données ! Bluffant et révolutionnaire… un must-have pour toute entreprise à la recherche d'efficience opérationnelle."</p>
+            <footer class="testimonial-author">
+                <span class="testimonial-name">Alexandre B.</span>
+                <span class="testimonial-role">CEO — Franchisé Marie Blachère</span>
+            </footer>
+        </blockquote>
+    </div>
+</section>
+
+<!-- ════════════════ MODALITÉS ════════════════ -->
+<section class="section-alt" id="modalites">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>Comment cela se passe.</h2>
+        <p>Il n'y a pas de formule toute faite. Chaque intervention part de la situation réelle de l'entreprise, avec un cadre clair dès le départ et un objectif de pilotage concret.</p>
+        <div class="modalites-list">
+            <div class="modalite-item">Un premier échange de 30 à 45 minutes pour comprendre votre situation, ce qui vous manque aujourd'hui pour piloter, et voir s'il y a un sujet à traiter.</div>
+            <div class="modalite-item">Si je peux vous aider, je vous propose un accompagnement cadré, avec un objectif, un périmètre et un calendrier clairs.</div>
+            <div class="modalite-item">L'intervention peut se faire sur site, à distance, ou en combinant les deux.</div>
+            <div class="modalite-item">Selon le besoin, l'accompagnement peut être ponctuel ou s'inscrire sur plusieurs mois, avec des résultats concrets à obtenir.</div>
+            <div class="modalite-item">Et si je pense ne pas être la bonne personne, je vous le dirai simplement.</div>
+        </div>
+        <div class="who-its-for">
+            <p><strong>Typiquement, je suis utile quand :</strong></p>
+            <p>— le dirigeant sent que l'entreprise a changé d'échelle, mais que le pilotage n'a pas suivi ;</p>
+            <p>— les données existent, sans être assez fiables, lisibles ou synchronisées pour décider sereinement ;</p>
+            <p>— les outils se sont empilés, sans vraie logique d'ensemble.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ CTA FINAL ════════════════ -->
+<section class="cta-final" id="contact">
+    <div class="container fade-in">
+        <h2>Faisons le point sur votre situation.</h2>
+        <p>Si vous avez le sentiment de piloter avec des informations incomplètes, en retard ou peu fiables, prenons 30 minutes pour voir ce qui bloque réellement et si un travail de clarification, de structuration ou d'alignement des outils est nécessaire.</p>
+        <a href="https://calendly.com/fjouvin/30min" target="_blank" rel="noopener" class="btn-primary">Prendre rendez-vous</a>
+    </div>
+</section>
+
+</main>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+    <div class="footer-links">
+        <a href="https://www.linkedin.com/in/fjouvin/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:contact@flowxify.com">contact@flowxify.com</a>
+    </div>
+    <p class="footer-info">
+        <span>Trouville-sur-Mer, France</span>
+        <span>&copy; 2025 Flowxify — Frédéric Jouvin</span>
+        <span><a href="mentions-legales.html">Mentions légales</a></span>
+    </p>
+</footer>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Flowxify",
+    "url": "https://flowxify.com/",
+    "description": "Accompagnement des dirigeants de PME : pilotage, structuration et outils pour retrouver une vision claire de l'activité.",
+    "founder": {
+        "@type": "Person",
+        "name": "Frédéric Jouvin",
+        "jobTitle": "Consultant en pilotage d'entreprise",
+        "url": "https://www.linkedin.com/in/fjouvin/"
+    },
+    "areaServed": {
+        "@type": "Country",
+        "name": "France"
+    },
+    "serviceType": ["Conseil en pilotage d'entreprise", "Structuration de l'information", "Accompagnement dirigeants PME"]
+}
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+    });
+</script>
+
+</body>
+</html>
