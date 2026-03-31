@@ -31,5 +31,8 @@ RewriteRule ^(.*)$ https://flowxify.com/$1 [R=301,L]
     Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# Clean URLs
+RewriteRule ^mentions-legales/?$ /mentions-legales.html [L]
+
 # Custom 404
 ErrorDocument 404 /index.html
