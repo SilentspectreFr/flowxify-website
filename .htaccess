@@ -10,9 +10,6 @@ RewriteCond %{HTTP_HOST} ^www\.flowxify\.com$ [NC]
 RewriteRule ^(.*)$ https://flowxify.com/$1 [R=301,L]
 
 
-# Redirection ancienne URL Google vers le vrai fichier
-RewriteRule ^mentions-legales/?$ /mentions-legales.html [R=301,L]
-
 # Cache statique (images, CSS, JS)
 <IfModule mod_expires.c>
     ExpiresActive On
