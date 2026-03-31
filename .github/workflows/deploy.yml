@@ -12,12 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /www/
-          protocol: ftps
-          dangerous-clean-slate: true
+      - name: Deploy via SFTP
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" sftp://${{ secrets.FTP_SERVER }} <<EOF
+          set sftp:auto-confirm yes
+          mirror -R --delete --exclude .git/ --exclude .github/ --verbose . /www/
+          quit
+          EOF
