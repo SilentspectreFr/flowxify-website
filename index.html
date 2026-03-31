@@ -35,9 +35,9 @@
             --color-bg-alt: #F9FAFB;
             --color-text: #1A1A2E;
             --color-muted: #6B7280;
-            --color-accent: #1E2A78;
-            --color-accent-hover: #162060;
-            --color-warm: #C85A30;
+            --color-accent: #5004A4;
+            --color-accent-hover: #3D0380;
+            --color-warm: #F44708;
             --color-border: #E5E7EB;
             --font-heading: 'DM Serif Display', Georgia, serif;
             --font-body: 'Source Sans 3', 'Georgia', sans-serif;
@@ -108,10 +108,8 @@
         }
 
         nav a.nav-cta:hover {
-            background: var(--color-accent);
-            color: white;
-            box-shadow: 0 4px 16px rgba(30, 42, 120, 0.25);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(80, 4, 164, 0.15);
         }
 
         /* ── LAYOUT ── */
@@ -164,9 +162,9 @@
         }
 
         .sep {
-            width: 40px;
+            width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-warm));
+            background: linear-gradient(90deg, #5004A4, #F44708);
             margin-bottom: 1.5rem;
             border-radius: 1px;
         }
@@ -191,9 +189,8 @@
         }
 
         .btn-primary:hover {
-            background: var(--color-accent);
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(30, 42, 120, 0.25);
+            box-shadow: 0 8px 24px rgba(244, 71, 8, 0.3);
         }
 
         /* ── HERO ── */
@@ -212,7 +209,7 @@
             right: -10%;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(30, 42, 120, 0.04) 0%, rgba(200, 90, 48, 0.02) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(80, 4, 164, 0.04) 0%, rgba(244, 71, 8, 0.02) 50%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: float-orb 20s ease-in-out infinite;
@@ -312,7 +309,7 @@
             line-height: 1.5;
             color: var(--color-text);
             border-left: 3px solid transparent;
-            border-image: linear-gradient(180deg, var(--color-accent), var(--color-warm)) 1;
+            border-image: linear-gradient(180deg, #5004A4, #F44708) 1;
             padding-left: 1.5rem;
             margin: 1.5rem 0;
         }
@@ -335,7 +332,7 @@
 
         .method-step:hover {
             background: var(--color-bg-alt);
-            border-color: rgba(200, 90, 48, 0.2);
+            border-color: rgba(244, 71, 8, 0.2);
         }
 
         .method-number {
@@ -374,10 +371,10 @@
         }
 
         .markers {
-            display: flex;
-            gap: 2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-top: 2rem;
-            flex-wrap: wrap;
         }
 
         .marker {
@@ -388,24 +385,40 @@
             color: var(--color-muted);
             padding: 0.6rem 1.2rem;
             border-left: 2px solid var(--color-accent);
-            background: rgba(30, 42, 120, 0.05);
+            background: rgba(80, 4, 164, 0.05);
             border-radius: 0 6px 6px 0;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
         .marker:hover {
-            background: rgba(30, 42, 120, 0.08);
+            background: rgba(80, 4, 164, 0.08);
             color: var(--color-text);
             transform: translateX(4px);
         }
 
         /* ── TÉMOIGNAGE ── */
-        .testimonial {
-            text-align: center;
+        .testimonial-carousel {
             position: relative;
             max-width: 680px;
             margin: 0 auto;
+        }
+
+        .testimonial {
+            text-align: center;
+            position: relative;
             padding: 2rem 0;
+        }
+
+        .testimonial-slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+            opacity: 1;
         }
 
         .testimonial::before {
@@ -413,7 +426,7 @@
             font-family: Georgia, serif;
             font-size: 3.5rem;
             line-height: 1;
-            color: rgba(30, 42, 120, 0.06);
+            color: rgba(80, 4, 164, 0.06);
             position: absolute;
             top: -0.5rem;
             left: 50%;
@@ -453,6 +466,33 @@
             font-size: 0.85rem;
             color: var(--color-muted);
             margin-top: 0.2rem;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+        }
+
+        .testimonial-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: var(--color-border);
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--color-warm);
+            transform: scale(1.25);
+        }
+
+        .testimonial-dot:hover {
+            background: var(--color-warm);
         }
 
         /* ── MODALITÉS — TIMELINE ── */
@@ -516,7 +556,7 @@
             background: var(--color-bg);
             border: 1px solid var(--color-border);
             border-left: 3px solid transparent;
-            border-image: linear-gradient(180deg, var(--color-accent), var(--color-warm)) 1;
+            border-image: linear-gradient(180deg, #5004A4, #F44708) 1;
             border-image-slice: 0 0 0 1;
             border-radius: 0;
         }
@@ -576,7 +616,7 @@
             transform: translateX(-50%);
             width: 800px;
             height: 400px;
-            background: radial-gradient(ellipse, rgba(30, 42, 120, 0.03) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(80, 4, 164, 0.03) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -662,7 +702,7 @@
         }
 
         .fade-in.visible .sep {
-            width: 40px;
+            width: 60px;
         }
 
         /* ── 2. Numéros méthode scale-up ── */
@@ -747,7 +787,7 @@
             .nav-logo { height: 48px; }
             .partipris-quote { font-size: 1.3rem; }
             .method-step { padding: 1.5rem; }
-            .markers { flex-direction: column; gap: 1rem; }
+            .markers { grid-template-columns: 1fr; gap: 1rem; }
 
             .testimonial::before { font-size: 4rem; }
             .testimonial-text { font-size: 1.15rem; }
@@ -864,20 +904,41 @@
 </section>
 
 <!-- ════════════════ TÉMOIGNAGE ════════════════ -->
-<section id="temoignage">
+<section id="temoignage" class="section-alt">
     <div class="container fade-in">
-        <blockquote class="testimonial">
-            <p class="testimonial-text">"Avant, je passais du temps à recouper des chiffres sans être sûr de partir des bonnes informations. Aujourd'hui, je sais ce que je dois suivre, les données sont fiables, et je décide plus vite."</p>
-            <footer class="testimonial-author">
-                <span class="testimonial-name">Alexandre B.</span>
-                <span class="testimonial-role">Dirigeant franchisé Marie Blachère</span>
-            </footer>
-        </blockquote>
+        <div class="testimonial-carousel">
+            <blockquote class="testimonial testimonial-slide active">
+                <p class="testimonial-text">"Avant, je passais du temps à recouper des chiffres sans être sûr de partir des bonnes informations. Aujourd'hui, je sais ce que je dois suivre, les données sont fiables, et je décide plus vite."</p>
+                <footer class="testimonial-author">
+                    <span class="testimonial-name">Alexandre B.</span>
+                    <span class="testimonial-role">Dirigeant franchisé Marie Blachère</span>
+                </footer>
+            </blockquote>
+            <blockquote class="testimonial testimonial-slide">
+                <p class="testimonial-text">"On avait des tableaux de bord partout, mais personne ne regardait les mêmes chiffres. En trois mois, Frédéric a remis de l'ordre : aujourd'hui, chaque service travaille avec la même base, et les arbitrages se font en réunion, pas par e-mail."</p>
+                <footer class="testimonial-author">
+                    <span class="testimonial-name">Xavier Weber</span>
+                    <span class="testimonial-role">DGS — Commune de Milly-la-Forêt</span>
+                </footer>
+            </blockquote>
+            <blockquote class="testimonial testimonial-slide">
+                <p class="testimonial-text">"On grandissait vite, mais notre pilotage était resté celui d'une boîte deux fois plus petite. Frédéric nous a aidés à identifier ce qu'il fallait vraiment suivre et à simplifier nos outils. On a gagné en clarté sans ajouter de complexité."</p>
+                <footer class="testimonial-author">
+                    <span class="testimonial-name">Alexis Huet</span>
+                    <span class="testimonial-role">CEO — Serum and Co</span>
+                </footer>
+            </blockquote>
+            <div class="testimonial-dots">
+                <button class="testimonial-dot active" aria-label="Témoignage 1"></button>
+                <button class="testimonial-dot" aria-label="Témoignage 2"></button>
+                <button class="testimonial-dot" aria-label="Témoignage 3"></button>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- ════════════════ MODALITÉS ════════════════ -->
-<section class="section-alt" id="modalites">
+<section id="modalites">
     <div class="container fade-in">
         <div class="sep"></div>
         <h2>Comment cela se passe.</h2>
@@ -927,7 +988,7 @@
         <a href="https://www.linkedin.com/in/fjouvin/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
     <p class="footer-info">
-        <span>&copy; 2025 Flowxify — Frédéric Jouvin</span>
+        <span>&copy; 2025 Flowxify</span>
         <span><a href="mentions-legales.html">Mentions légales</a></span>
     </p>
 </footer>
@@ -968,6 +1029,32 @@
         window.addEventListener('scroll', () => {
             nav.classList.toggle('scrolled', window.scrollY > 40);
         }, { passive: true });
+
+        // Testimonial carousel
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.testimonial-dot');
+        let current = 0;
+        let timer = setInterval(nextSlide, 5000);
+
+        function goTo(i) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = i;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+        }
+
+        function nextSlide() {
+            goTo((current + 1) % slides.length);
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                clearInterval(timer);
+                goTo(i);
+                timer = setInterval(nextSlide, 5000);
+            });
+        });
     });
 </script>
 
