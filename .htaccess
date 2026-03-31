@@ -9,8 +9,9 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.flowxify\.com$ [NC]
 RewriteRule ^(.*)$ https://flowxify.com/$1 [R=301,L]
 
-# Clean URLs (avant tout autre traitement)
-RewriteRule ^mentions-legales/?$ mentions-legales.html [L]
+# Clean URLs — mentions-legales sans slash redirige vers le dossier
+RewriteCond %{REQUEST_URI} ^/mentions-legales$
+RewriteRule ^(.*)$ /mentions-legales/ [R=301,L]
 
 # Cache statique (images, CSS, JS)
 <IfModule mod_expires.c>
