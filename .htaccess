@@ -9,7 +9,6 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.flowxify\.com$ [NC]
 RewriteRule ^(.*)$ https://flowxify.com/$1 [R=301,L]
 
-
 # Cache statique (images, CSS, JS)
 <IfModule mod_expires.c>
     ExpiresActive On
@@ -33,5 +32,5 @@ RewriteRule ^(.*)$ https://flowxify.com/$1 [R=301,L]
     Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Custom 404
-ErrorDocument 404 /index.html
+# Vraie page 404 (plus de fallback vers la home)
+ErrorDocument 404 /404.html

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page introuvable — Flowxify</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #FFFFFF;
+            --color-text: #1A1A2E;
+            --color-muted: #6B7280;
+            --color-accent: #1E2A78;
+            --color-accent-hover: #162060;
+            --color-border: #E5E7EB;
+            --font-heading: 'DM Serif Display', Georgia, serif;
+            --font-body: 'Source Sans 3', 'Georgia', sans-serif;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 18px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+            padding: 0.9rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            height: 96px;
+            width: auto;
+        }
+
+        nav a.nav-cta {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border: 1.5px solid var(--color-accent);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a.nav-cta:hover {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--color-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+            background: var(--color-accent);
+            text-decoration: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--color-accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(30, 42, 120, 0.25);
+        }
+
+        footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+        }
+
+        @media (max-width: 767px) {
+            html { font-size: 16px; }
+            h1 { font-size: 2.2rem; }
+            .nav-logo { height: 72px; }
+            nav { padding: 0.8rem 1.25rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="/"><img src="/logo.png" alt="Flowxify" class="nav-logo"></a>
+    <a href="https://calendly.com/fjouvin/30min" target="_blank" rel="noopener" class="nav-cta">Prendre rendez-vous</a>
+</nav>
+
+<div class="content">
+    <h1>Page introuvable</h1>
+    <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+    <a href="/" class="back-link">Retour à l'accueil</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Flowxify</p>
+</footer>
+
+</body>
+</html>
