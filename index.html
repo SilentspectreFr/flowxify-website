@@ -491,6 +491,31 @@
             font-size: 0.9rem;
         }
 
+        /* ── CE QUE CELA PERMET ── */
+        .enables-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .enables-item {
+            font-size: 1.05rem;
+            color: var(--color-text);
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .enables-item::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
         /* ── TÉMOIGNAGE ── */
         .testimonial-grid {
             display: grid;
@@ -674,14 +699,14 @@
             transform: translateY(0);
         }
 
-        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item) {
+        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item, .enables-item) {
             opacity: 0;
             animation: stagger-in 0.6s ease forwards;
         }
 
-        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item):nth-child(1) { animation-delay: 0.1s; }
-        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item):nth-child(2) { animation-delay: 0.2s; }
-        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item):nth-child(3) { animation-delay: 0.3s; }
+        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item, .enables-item):nth-child(1) { animation-delay: 0.1s; }
+        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item, .enables-item):nth-child(2) { animation-delay: 0.2s; }
+        .fade-in.visible :is(.method-step, .pain-point, .testimonial-card, .process-card, .not-doing-item, .enables-item):nth-child(3) { animation-delay: 0.3s; }
         .fade-in.visible :is(.pain-point, .not-doing-item):nth-child(4) { animation-delay: 0.4s; }
         .fade-in.visible .pain-point:nth-child(5) { animation-delay: 0.5s; }
 
@@ -851,6 +876,7 @@
             <div class="pain-point">On vous parle d'outils ou de logiciels avant même d'avoir clarifié ce qu'il faut vraiment suivre.</div>
             <div class="pain-point">Vous découvrez en fin de mois — parfois bien plus <strong>trop tard</strong> — que la situation réelle n'était pas celle que vous pensiez.</div>
         </div>
+        <p style="margin-top: 2rem; font-size: 1.05rem; color: var(--color-text); line-height: 1.8;">Ce flou ne vient pas forcément d'un manque d'outils. Il vient souvent d'un pilotage qui s'est complexifié sans être réellement clarifié.</p>
     </div>
 </section>
 
@@ -868,6 +894,7 @@
             Je ne vends pas de logiciel.<br>
             Je clarifie d'abord ce que vous devez pouvoir décider, et avec quelles informations.
         </div>
+        <p>L'objectif est simple : vous remettre face à des informations fiables, utiles et directement exploitables pour décider.</p>
     </div>
 </section>
 
@@ -949,6 +976,19 @@
     </div>
 </section>
 
+<!-- ════════════════ CE QUE CELA PERMET ════════════════ -->
+<section class="section-alt" id="resultats">
+    <div class="container fade-in">
+        <div class="sep"></div>
+        <h2>Ce que cela permet.</h2>
+        <div class="enables-grid">
+            <div class="enables-item">Un cadre de pilotage clair, partagé et compréhensible par tous.</div>
+            <div class="enables-item">Des informations fiables, sans retraitements permanents.</div>
+            <div class="enables-item">Des décisions prises plus simplement, sans dépendre d'allers-retours ou de vérifications constantes.</div>
+        </div>
+    </div>
+</section>
+
 <!-- ════════════════ TÉMOIGNAGES ════════════════ -->
 <section id="temoignage" class="section-alt">
     <div class="container fade-in">
@@ -1012,7 +1052,7 @@
 <section class="cta-final" id="contact">
     <div class="container fade-in">
         <h2>Voyons rapidement si le sujet mérite d'être traité.</h2>
-        <p>30 minutes, sans préparation, pour clarifier ce qui bloque vraiment dans votre pilotage.</p>
+        <p>30 minutes, sans préparation, pour clarifier ce qui bloque vraiment et voir comment retrouver un pilotage plus lisible.</p>
         <a href="https://calendly.com/fjouvin/30min" target="_blank" rel="noopener" class="btn-primary">Prendre un premier échange (30 min)</a>
     </div>
 </section>
