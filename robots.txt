@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /formations/
 
 Sitemap: https://flowxify.com/sitemap.xml

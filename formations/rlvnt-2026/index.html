@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mémo Claude, RLVNT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFFFF;
+  --bg-alt: #F9FAFB;
+  --bg-dark: #1A1A2E;
+  --text: #1A1A2E;
+  --muted: #6B7280;
+  --accent: #5004A4;
+  --accent-hover: #3D0380;
+  --warm: #F44708;
+  --border: #E5E7EB;
+  --font-h: 'DM Serif Display', Georgia, serif;
+  --font-b: 'Source Sans 3', Georgia, sans-serif;
+  --shadow-soft: 0 2px 12px rgba(26,26,46,0.06);
+  --shadow-violet: 0 6px 24px rgba(80,4,164,0.18);
+  --shadow-warm: 0 6px 24px rgba(244,71,8,0.18);
+  --gradient: linear-gradient(90deg, #5004A4 0%, #F44708 100%);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  font-family: var(--font-b);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--bg-alt);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.6rem 0;
+}
+.sidebar-brand {
+  padding: 0 1.5rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.8rem;
+}
+.sidebar-brand .brand-logo {
+  display: block;
+  height: 32px;
+  width: auto;
+  max-width: 160px;
+}
+.sidebar-brand .brand-sub {
+  font-size: 0.74rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+.sidebar-nav { list-style: none; }
+.sidebar-nav .nav-section-title {
+  padding: 1rem 1.5rem 0.45rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.sidebar-nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.5rem 1.5rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.93rem;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+.sidebar-nav a:hover {
+  background: rgba(80,4,164,0.05);
+  border-left-color: var(--accent);
+  color: var(--accent);
+}
+.sidebar-nav a.active {
+  background: linear-gradient(90deg, rgba(80,4,164,0.08) 0%, rgba(244,71,8,0.04) 100%);
+  border-left-color: var(--warm);
+  color: var(--accent);
+  font-weight: 600;
+}
+.sidebar-nav .nav-num {
+  font-size: 0.74rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  min-width: 22px;
+}
+.sidebar-nav a.active .nav-num { color: var(--warm); font-weight: 600; }
+.main { flex: 1; max-width: calc(100% - 280px); }
+.main-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 3.2rem 6rem;
+}
+.hero {
+  padding: 2.5rem 0 3rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+.hero h1 {
+  font-family: var(--font-h);
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  max-width: 820px;
+}
+.hero h1 .accent {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-lead {
+  font-size: 1.18rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+  max-width: 720px;
+  line-height: 1.55;
+}
+.hero-meta {
+  display: flex;
+  gap: 1.8rem;
+  margin-top: 1.6rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.hero-meta strong { color: var(--text); font-weight: 600; }
+section.seq {
+  margin-bottom: 4.5rem;
+  scroll-margin-top: 24px;
+}
+.seq-header {
+  margin-bottom: 1.8rem;
+  padding-bottom: 1rem;
+  position: relative;
+}
+.seq-header::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 80px;
+  height: 3px;
+  background: var(--gradient);
+  border-radius: 2px;
+}
+.seq-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+.seq-header h2 {
+  font-family: var(--font-h);
+  font-size: 2.3rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.seq-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  max-width: 820px;
+}
+h3 {
+  font-family: var(--font-h);
+  font-size: 1.55rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 2.4rem 0 0.9rem;
+  color: var(--text);
+}
+h4 {
+  font-family: var(--font-b);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 1.6rem 0 0.6rem;
+}
+p { margin-bottom: 1rem; max-width: 820px; }
+ul, ol { margin: 0.6rem 0 1.1rem 1.4rem; max-width: 820px; }
+li { margin-bottom: 0.45rem; }
+strong { font-weight: 600; }
+em { font-style: italic; }
+a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--accent-hover); }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(80,4,164,0.08);
+  padding: 0.12em 0.42em;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+.card {
+  border-radius: 10px;
+  padding: 1.4rem 1.6rem;
+  margin: 1.3rem 0;
+  max-width: 900px;
+}
+.card-objectif {
+  background: linear-gradient(135deg, rgba(80,4,164,0.04) 0%, rgba(244,71,8,0.04) 100%);
+  border: 1px solid rgba(80,4,164,0.18);
+  border-left: 4px solid var(--warm);
+  box-shadow: var(--shadow-soft);
+}
+.card-objectif .card-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.card-pourquoi {
+  background: var(--bg-alt);
+  border-left: 3px solid var(--accent);
+  padding: 1.1rem 1.4rem;
+  border-radius: 6px;
+}
+.card-pourquoi .card-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.card-retenir {
+  background: linear-gradient(135deg, rgba(80,4,164,0.06) 0%, rgba(244,71,8,0.06) 100%);
+  border: 1px solid rgba(80,4,164,0.18);
+  box-shadow: var(--shadow-soft);
+}
+.card-retenir .card-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.55rem;
+}
+.card-piege {
+  background: rgba(244,71,8,0.05);
+  border-left: 3px solid var(--warm);
+  padding: 1.1rem 1.4rem;
+  border-radius: 6px;
+}
+.card-piege .card-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.card-rupture {
+  background: var(--bg-dark);
+  color: #F9FAFB;
+  border: none;
+  padding: 1.8rem 2rem;
+  box-shadow: var(--shadow-violet);
+}
+.card-rupture h4 { color: #F9FAFB; opacity: 0.7; }
+.card-rupture strong { color: #FFFFFF; }
+.card-rupture .manifeste {
+  font-family: var(--font-h);
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+.prompt {
+  background: var(--bg-dark);
+  color: #F9FAFB;
+  padding: 1.4rem 1.6rem;
+  border-radius: 10px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 1.2rem 0;
+  white-space: pre-wrap;
+  box-shadow: var(--shadow-violet);
+  max-width: 900px;
+}
+.prompt strong { color: var(--warm); font-weight: 600; }
+.prompt-label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.85rem;
+  font-weight: 600;
+}
+.prompt-comment {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  margin-bottom: 1.4rem;
+  font-style: italic;
+  max-width: 820px;
+}
+.pullquote {
+  font-family: var(--font-h);
+  font-size: 1.7rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  border-left: 4px solid var(--warm);
+  padding: 1rem 0 1rem 1.5rem;
+  margin: 2rem 0;
+  max-width: 820px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0 1.6rem;
+  font-size: 0.95rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+th, td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-alt);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: rgba(249,250,251,0.4); }
+td strong { color: var(--accent); }
+.bignum-list {
+  list-style: none;
+  margin: 1.2rem 0 1.6rem;
+  padding: 0;
+  max-width: 900px;
+}
+.bignum-list li {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.2rem;
+  align-items: start;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.bignum-list li:last-child { border-bottom: none; }
+.bignum-list .bn {
+  font-family: var(--font-h);
+  font-size: 3.5rem;
+  line-height: 1;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+}
+.bignum-list .bn-content strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+.checks {
+  list-style: none;
+  margin: 0.8rem 0;
+  padding: 0;
+}
+.checks li {
+  padding: 0.45rem 0 0.45rem 2rem;
+  position: relative;
+  font-size: 0.95rem;
+}
+.checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--warm);
+  border-radius: 3px;
+}
+.matrix-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.4rem 0;
+  max-width: 900px;
+}
+.matrix-cell {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+}
+.matrix-cell .matrix-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.matrix-cell strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+.matrix-cell p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+.transition {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  margin: 2rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--border);
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.memo-block {
+  background: linear-gradient(135deg, rgba(80,4,164,0.04) 0%, rgba(244,71,8,0.04) 100%);
+  border: 1px solid rgba(80,4,164,0.2);
+  border-radius: 10px;
+  padding: 1.5rem 1.8rem;
+  margin: 1.2rem 0;
+  max-width: 900px;
+  position: relative;
+}
+.memo-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--gradient);
+  border-radius: 10px 10px 0 0;
+}
+.memo-block .memo-num {
+  font-family: var(--font-h);
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warm);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.memo-block h4 {
+  font-family: var(--font-h);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--text);
+  margin: 0 0 1rem;
+  font-weight: normal;
+}
+.memo-block p { margin-bottom: 0.7rem; }
+.memo-block p:last-child { margin-bottom: 0; }
+@media print {
+  .sidebar { display: none; }
+  .main { max-width: 100%; }
+  .main-inner { padding: 1rem; max-width: 100%; }
+  section.seq { page-break-after: always; }
+  .prompt, .card-rupture { box-shadow: none; }
+  .hero { page-break-after: always; }
+}
+@media (max-width: 980px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; position: static; height: auto; padding: 1rem 0; }
+  .main { max-width: 100%; }
+  .main-inner { padding: 1.5rem 1.3rem 4rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .seq-header h2 { font-size: 1.7rem; }
+  h3 { font-size: 1.3rem; }
+  .matrix-2x2 { grid-template-columns: 1fr; }
+}
+a:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 3px; }
+
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <img src="/logo.png" alt="Flowxify" class="brand-logo">
+    <div class="brand-sub">Mémo Claude, RLVNT</div>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="nav-section-title">Le mémo</li>
+    <li><a href="#hero"><span class="nav-num">0</span><span>Comment lire ce mémo</span></a></li>
+    <li><a href="#s1"><span class="nav-num">1</span><span>Repères Claude</span></a></li>
+    <li><a href="#s2"><span class="nav-num">2</span><span>Bien parler à Claude</span></a></li>
+    <li><a href="#s3"><span class="nav-num">3</span><span>Les 5 briques</span></a></li>
+    <li><a href="#s4"><span class="nav-num">4</span><span>Quel mode pour quoi</span></a></li>
+    <li><a href="#s5"><span class="nav-num">5</span><span>Les pas-à-pas</span></a></li>
+    <li><a href="#s6"><span class="nav-num">6</span><span>Limites et règles d'or</span></a></li>
+    <li class="nav-section-title">Annexes</li>
+    <li><a href="#memos"><span class="nav-num">M</span><span>Mémos à épingler</span></a></li>
+  </ul>
+</aside>
+
+<main class="main">
+<div class="main-inner">
+
+<section class="hero" id="hero">
+  <div class="hero-eyebrow">Mémo de référence post-formation</div>
+  <h1>Claude au quotidien chez <span class="accent">RLVNT</span></h1>
+  <p class="hero-lead">Ce document n'est pas un compte rendu de la formation du 6 mai 2026. C'est un mémo de référence à ouvrir au moment où vous en avez besoin : un doute sur un concept, une procédure à retrouver, une bonne pratique à vérifier.</p>
+  <div class="hero-meta">
+    <span><strong>Pour</strong> Nicolas et Céline Nepper</span>
+    <span><strong>Par</strong> Frédéric Jouvin, Flowxify</span>
+    <span><strong>Version</strong> mai 2026</span>
+  </div>
+  <p style="margin-top: 2rem; max-width: 720px;">Le mémo se lit dans n'importe quel ordre. Chaque section est autonome et conçue pour être consultée ponctuellement. La sidebar de gauche te ramène à n'importe quelle section en un clic. Pour la consultation rapide, va directement aux <strong>mémos à épingler</strong> en bas du document.</p>
+</section>
+
+<section class="seq" id="s1">
+  <div class="seq-header">
+    <div class="seq-tag">Section 1</div>
+    <h2>Repères Claude</h2>
+    <p class="seq-lead">Qui fait Claude, quels modèles existent, quand utiliser lequel.</p>
+  </div>
+
+  <h3>1.1 Qui fait Claude</h3>
+  <p>Claude est fabriqué par <strong>Anthropic</strong>, société américaine fondée en 2021 par Dario et Daniela Amodei avec une dizaine d'anciens d'OpenAI. La thèse est de construire les modèles les plus performants possibles, et d'y intégrer la sécurité dès la conception.</p>
+  <p>Concrètement, Anthropic utilise une approche appelée <strong>IA constitutionnelle</strong>. Au lieu de faire noter chaque réponse à la main par des humains, une autre IA note les réponses du modèle selon un ensemble de principes publics (être utile, ne pas tromper, respecter l'autonomie). C'est ce qui explique le ton de Claude au quotidien : plus posé, plus enclin à demander une précision quand ta demande est floue, plutôt que de produire à tout prix.</p>
+  <p>À côté d'Anthropic, deux autres acteurs principaux : <strong>OpenAI</strong> (ChatGPT) et <strong>Google</strong> (Gemini). Plus <strong>Mistral</strong> en France, <strong>Copilot</strong> chez Microsoft (qui repose sur GPT avec sa propre couche), <strong>Llama</strong> chez Meta (open source).</p>
+
+  <h3>1.2 Les trois familles de modèles</h3>
+  <p>Claude n'est pas un modèle, c'est trois familles. À l'image d'un constructeur automobile qui aurait une berline, une polyvalente et une citadine.</p>
+  <table>
+    <thead>
+      <tr><th>Modèle</th><th>À utiliser pour</th><th>Vitesse</th><th>Coût relatif</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Opus</strong></td><td>Analyse complexe, lecture de gros documents, réflexion stratégique</td><td>Lent</td><td>Élevé</td></tr>
+      <tr><td><strong>Sonnet</strong></td><td>Usage quotidien tout-terrain (le défaut recommandé)</td><td>Moyen</td><td>Modéré</td></tr>
+      <tr><td><strong>Haiku</strong></td><td>Tâches rapides, extraction de données, workflows automatisés</td><td>Très rapide</td><td>Faible</td></tr>
+    </tbody>
+  </table>
+  <p>Tu changes de modèle dans le menu déroulant en haut de la fenêtre de discussion. <strong>Reste sur Sonnet par défaut.</strong> Tu passes à Opus quand tu travailles sur un sujet où la qualité prime sur le temps : préparer une revue trimestrielle, analyser un dossier complexe, retravailler une note importante. Haiku, tu le rencontreras surtout dans les automatismes (à l'intérieur d'une Skill, d'une scheduled task), pas en discussion directe.</p>
+
+  <h3>1.3 Le mode réflexion approfondie</h3>
+  <p>Indépendamment du modèle, tu peux activer un <strong>mode réflexion approfondie</strong> (parfois appelé extended thinking). Concrètement : tu actives, tu poses ta question, et Claude prend 20 à 60 secondes de raisonnement visible avant de répondre. Tu vois le fil de sa pensée. La réponse finale est plus articulée, plus nuancée, mieux argumentée.</p>
+  <div class="card card-pourquoi">
+    <div class="card-eyebrow">Le bon réflexe</div>
+    <p style="margin-bottom: 0;">Active la réflexion approfondie quand <strong>la valeur de la décision est élevée</strong>. Une revue avec ton actionnaire, une réorganisation d'équipe, une note stratégique. Pour un mail courant ou un brouillon rapide, tu n'en as pas besoin, ça ralentit pour rien.</p>
+  </div>
+
+  <h3>1.4 Synthèse, quel modèle quand</h3>
+  <table>
+    <thead>
+      <tr><th>Tu veux</th><th>Tu choisis</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Répondre à un mail, brouillonner, brainstormer</td><td>Sonnet, mode normal</td></tr>
+      <tr><td>Préparer une revue trimestrielle, retravailler une note importante</td><td>Sonnet ou Opus, <strong>réflexion approfondie activée</strong></td></tr>
+      <tr><td>Analyser un gros document (audit, contrat long, rapport)</td><td>Opus, réflexion approfondie activée</td></tr>
+      <tr><td>Faire tourner une Skill ou une scheduled task</td><td>Sonnet ou Haiku selon la tâche, défini dans la config</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="seq" id="s2">
+  <div class="seq-header">
+    <div class="seq-tag">Section 2</div>
+    <h2>Bien parler à Claude</h2>
+    <p class="seq-lead">La section la plus importante du mémo. Si tu ne dois retenir qu'une chose de la formation, c'est celle-ci.</p>
+  </div>
+
+  <h3>2.1 La structure d'un bon prompt : Contexte, Tâche, Format</h3>
+  <p>Trois mots à garder en tête. Tu les appliques systématiquement, et 80 % de tes problèmes de prompting disparaissent.</p>
+  <table>
+    <thead>
+      <tr><th>Bloc</th><th>Question à se poser</th><th>Exemple court</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Contexte</strong></td><td>Qui je suis, où je suis, à qui je parle ?</td><td>"Je co-dirige RLVNT, distribution sport et outdoor, équipe de 7."</td></tr>
+      <tr><td><strong>Tâche</strong></td><td>Qu'est-ce que je veux exactement qu'il produise ?</td><td>"Liste 5 hypothèses pour expliquer une baisse de 2 points de marge brute."</td></tr>
+      <tr><td><strong>Format</strong></td><td>Sous quelle forme la réponse doit arriver ?</td><td>"Tableau, 1 hypothèse par ligne, colonne 'indicateur à vérifier' à droite."</td></tr>
+    </tbody>
+  </table>
+  <p><strong>L'erreur classique</strong> : confondre une tâche avec un sujet. "Parle-moi des marges" n'est pas une tâche, c'est un sujet, et tu obtiendras un essai générique. "Liste-moi les 5 hypothèses les plus probables qui expliquent une baisse de marge brute, par ordre de priorité, avec un indicateur à regarder pour chaque", c'est une tâche, et tu obtiendras quelque chose d'exploitable.</p>
+  <p>Le brief, c'est toi qui le tapes. Tu n'as pas à devenir un expert technique, tu as à devenir bon pour briefer. Exactement comme avec un nouveau collaborateur.</p>
+
+  <h3>2.2 Trois leviers facultatifs</h3>
+  <p>Sur la base Contexte / Tâche / Format, tu peux empiler trois leviers. Pas indispensables, mais utiles.</p>
+  <p><strong>Le rôle.</strong> "Tu es mon directeur de cabinet", "Tu es un avocat spécialisé en droit du travail", "Tu es mon responsable marketing". Claude ajuste son angle, son vocabulaire, ses priorités.</p>
+  <p><strong>Les exemples.</strong> "Voici une bonne note interne : [colle un exemple]. Reproduis ce ton et cette structure." C'est le levier le plus puissant, et le plus sous-utilisé. Quand tu as un modèle qui te convient, donne-le. Claude apprend par l'exemple bien mieux que par la consigne.</p>
+  <p><strong>Les contraintes négatives.</strong> "Pas de jargon de consultant", "N'invente pas de chiffres", "Pas d'introduction du type 'dans un contexte économique tendu'". Ce que tu ne veux pas est aussi important que ce que tu veux.</p>
+
+  <h3>2.3 L'état d'esprit itératif</h3>
+  <p>La première réponse de Claude n'est presque jamais la finale. Et ce n'est pas un défaut, c'est la nature de l'outil.</p>
+  <p>Avec un humain, tu itères sans même y penser. Tu demandes, il répond, tu reformules, il précise, tu l'envoies revoir un point. Personne n'attend qu'un brief unique produise une note parfaite du premier coup. Avec Claude c'est pareil. Sauf que beaucoup de gens, à la première réponse imparfaite, abandonnent. Il suffirait de relancer.</p>
+  <p><strong>Posture, pas technique.</strong> Ce qui bloque, ce n'est jamais la formulation, c'est l'idée même qu'on peut, et qu'on doit, repasser deux ou trois fois.</p>
+
+  <h3>2.4 Cinq techniques d'itération</h3>
+  <p>À utiliser, du plus puissant au plus simple. La première est <strong>le réflexe pro le plus sous-utilisé</strong>.</p>
+
+  <h4>1. Éditer ton prompt initial (le réflexe à acquérir en premier)</h4>
+  <p>Quand la première réponse de Claude est franchement éloignée de ce que tu attendais, <strong>n'ajoute pas de relance</strong>. Édite ton prompt initial, et reformule.</p>
+  <p><strong>Pourquoi.</strong> Claude conserve toute la conversation en contexte. Si ton premier message était mal posé, il continue de tirer les réponses dans la mauvaise direction, même quand tu rectifies par-dessus avec des "non, plutôt comme ceci". Tu accumules de la confusion, pas de la précision.</p>
+  <p><strong>Comment.</strong> Passe la souris sur ton message, clique sur l'icône d'édition, reformule, valide. Claude génère une nouvelle réponse à partir de ce nouveau brief, dans une <strong>branche propre</strong>. L'ancienne version reste accessible via les flèches de navigation à côté du message : tu peux switcher entre les deux. C'est aussi une façon naturelle de faire du A/B testing entre deux briefs.</p>
+  <div class="card card-piege">
+    <div class="card-eyebrow">À savoir</div>
+    <p style="margin-bottom: 0;"><strong>Disponible uniquement en Chat</strong> (que tu sois en conversation libre ou dans un Project). Cette fonctionnalité <strong>n'existe pas en Cowork</strong> : une tâche Cowork lancée se déroule, tu ne peux pas la rééditer en amont. Si une tâche Cowork part dans le mauvais sens, soit tu l'arrêtes et tu en relances une autre avec un meilleur brief, soit tu la laisses finir et tu reformules dans la conversation suivante.</p>
+  </div>
+  <p><strong>Quand.</strong> Dès que tu sens, à la première lecture de la réponse, qu'elle ne va pas s'aligner avec un simple "plus court" ou "ajoute X". Si l'angle est faux, le ton complètement à côté, ou la structure inadaptée, tu n'itères pas, tu rebrieffes.</p>
+  <p class="pullquote" style="font-size: 1.2rem;">Plus tu attends longtemps avant d'éditer, plus tu accumules de réponses pas alignées que Claude prend pour acquises. Édite tôt, édite franchement.</p>
+
+  <h4>2. La relance simple</h4>
+  <p>Quand la réponse est dans la bonne direction mais demande un ajustement. "Plus court", "plus formel", "ajoute un point sur les fournisseurs". Marche dans 80 % des cas, à condition que la base soit bonne.</p>
+
+  <h4>3. Les variantes</h4>
+  <p>"Propose-moi 3 versions différentes de ce paragraphe." Utile quand tu sens que la formulation est perfectible mais que tu n'as pas encore identifié dans quelle direction la pousser.</p>
+
+  <h4>4. L'auto-critique</h4>
+  <p>"Critique ta propre réponse comme un consultant senior, puis propose une version améliorée." Très efficace quand tu vois que la réponse est moyenne mais que tu n'arrives pas à pointer pourquoi.</p>
+
+  <h4>5. La décomposition rétrospective</h4>
+  <p>"Avant de répondre, liste les sous-questions que tu vas devoir traiter, puis traite-les." À utiliser quand le sujet est complexe et que tu sens que Claude va survoler.</p>
+
+  <h3>2.5 Démo, le même besoin avec deux prompts</h3>
+  <p>Cas : tu prépares ton prochain point fixe avec un membre de l'équipe.</p>
+  <h4>Prompt vague</h4>
+  <div class="prompt"><span class="prompt-label">Prompt vague</span>Aide-moi à préparer mon point avec [prénom].</div>
+  <p class="prompt-comment">Tu obtiens une trame générique, valable pour n'importe quel manager dans n'importe quelle entreprise. Pas exploitable.</p>
+  <h4>Prompt structuré</h4>
+  <div class="prompt"><span class="prompt-label">Prompt structuré, Contexte / Tâche / Format</span><strong>Contexte</strong> : je co-dirige RLVNT, distribution sport et outdoor, 7 personnes. Je fais un point mensuel d'1 heure avec [prénom], qui pilote [périmètre]. Le précédent point est à la fin de mes notes ci-dessous. Le point a lieu vendredi prochain.
+
+<strong>Tâche</strong> : prépare-moi un pense-bête à imprimer pour ce point. Il doit (1) reprendre les 3 sujets que nous avions identifiés au point précédent et la question à poser sur chacun, (2) proposer 2 sujets nouveaux pertinents au regard de la période (saison, échéances commerciales, charge de travail visible dans nos échanges récents), (3) finir par une question ouverte sur sa charge perçue et son moral.
+
+<strong>Format</strong> : une page A4 maximum. Pas d'introduction. Présentation en 3 blocs courts (suivi, nouveaux sujets, ouverture). Chaque sujet en 3 lignes maximum : intitulé, contexte en une phrase, question à poser.</div>
+  <p class="prompt-comment">Le prompt vague produit du remplissage. Le prompt structuré produit un pense-bête utilisable tel quel, ancré dans ton contexte réel.</p>
+
+  <h3>2.6 Tableau de dépannage, symptôme cause correctif</h3>
+  <table>
+    <thead>
+      <tr><th>Symptôme</th><th>Cause probable</th><th>Correctif</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Réponse trop générique</td><td>Pas assez de contexte</td><td>Ajouter qui tu es, le secteur, les contraintes</td></tr>
+      <tr><td>Roman à rallonge</td><td>Pas de contrainte de longueur</td><td>"En 200 mots maximum", "5 puces de 2 lignes"</td></tr>
+      <tr><td>Ton qui ne va pas</td><td>Ton non explicité</td><td>"Ton direct, factuel", "Comme une note interne"</td></tr>
+      <tr><td>Format ignoré</td><td>Format demandé en passant</td><td>Reformuler en bloc séparé "<strong>Format :</strong>"</td></tr>
+      <tr><td>Réponse en anglais</td><td>Le modèle bascule parfois</td><td>"Réponds en français" en début de prompt</td></tr>
+      <tr><td>Claude refuse</td><td>Demande mal formulée ou ambiguë</td><td>Reformuler en explicitant la finalité légitime</td></tr>
+      <tr><td>Claude invente des chiffres</td><td>Hallucination (voir section 6)</td><td>"Ne cite que des chiffres que tu peux sourcer". Toujours vérifier.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.7 Trois techniques de dépannage à retenir</h3>
+  <p><strong>Reprendre de zéro.</strong> Si la conversation part en vrille, ouvre une nouvelle conversation, repars sur un prompt propre. Ne t'acharne pas. Une conversation polluée se redresse rarement.</p>
+  <p><strong>Critiquer et améliorer.</strong> "Cette réponse n'est pas satisfaisante parce que [raison]. Critique-la et propose une version améliorée." Très efficace quand tu vois ce qui cloche mais que tu ne sais pas comment formuler la correction.</p>
+  <p><strong>Demander ce qui manque.</strong> "Avant de répondre, dis-moi quelles informations te manquent pour produire une réponse de qualité." C'est ta meilleure protection contre le "Claude invente parce que je ne lui ai pas donné assez de contexte".</p>
+
+  <h3>2.8 Le mémo à garder en tête</h3>
+  <div class="card card-retenir">
+    <div class="card-eyebrow">À retenir</div>
+    <p style="margin-bottom: 0.6rem;">Trois mots dans la tête : <strong>Contexte, Tâche, Format</strong>.</p>
+    <p style="margin-bottom: 0.6rem;">Et deux réflexes : la première réponse, c'est un brouillon. Le vrai travail commence après.</p>
+    <p style="margin-bottom: 0;">Et si la première réponse est franchement éloignée de ce que tu voulais, <strong>édite ton prompt initial</strong> plutôt que d'empiler des relances.</p>
+  </div>
+</section>
+
+<section class="seq" id="s3">
+  <div class="seq-header">
+    <div class="seq-tag">Section 3</div>
+    <h2>Les 5 briques</h2>
+    <p class="seq-lead">Une fiche rapide par brique, à consulter quand tu hésites sur l'usage exact de l'une d'elles. Le positionnement entre briques est traité en section 4.</p>
+  </div>
+
+  <h3>3.1 Projects, le workspace dédié</h3>
+  <p>Un Project est <strong>un espace de travail dans Claude dédié à un sujet, un poste, ou un usage récurrent</strong>. Il contient trois choses : des <strong>instructions permanentes</strong> (qui tu es, ton rôle, le ton attendu, les règles), une <strong>base de connaissances</strong> (fichiers que Claude doit avoir en tête à chaque conversation), et l'<strong>historique de toutes les conversations</strong> menées dans ce Project.</p>
+  <p>Tu mobilises un Project quand tu reviens régulièrement sur le même sujet et que tu en as marre de tout réexpliquer à chaque conversation. Cas RLVNT typiques : "Pilotage France RLVNT" pour Nicolas (chiffres clés, organigramme, fiches de poste, plan stratégique, comptes rendus de revues trimestrielles), "RH RLVNT" pour Céline (organigramme, fiches de poste, processus RH, modèles de documents).</p>
+  <div class="card card-piege">
+    <div class="card-eyebrow">Piège</div>
+    <p style="margin-bottom: 0;">Ne pas confondre un Project avec un dossier où tu balances tout. Un Project a une <strong>finalité claire</strong>. Mieux vaut deux Projects bien cadrés (Pilotage, RH) qu'un seul fourre-tout.</p>
+  </div>
+
+  <h3>3.2 Artifacts, la sortie éditable</h3>
+  <p>Un Artifact est un <strong>livrable autonome que Claude produit en parallèle de la conversation</strong> : un document, un tableau, une présentation simple, un mini-site, un script. Il s'affiche dans une zone à droite de l'écran. Tu peux l'éditer en demandant des modifications ciblées, sans que Claude regénère tout.</p>
+  <p>Tu n'as rien à activer. C'est un comportement automatique de Claude quand la sortie attendue est un livrable structuré. Le réflexe à acquérir : <strong>si Claude ne crée pas spontanément un Artifact alors que tu attends un livrable</strong>, demande "produis-le comme un Artifact". Tu pourras ensuite le télécharger, le copier, ou le retravailler en place.</p>
+  <div class="card card-piege">
+    <div class="card-eyebrow">Piège</div>
+    <p style="margin-bottom: 0;">Un Artifact n'est pas un fichier sauvegardé. Si tu fermes la conversation sans le copier ou le télécharger, tu peux le retrouver dans l'historique, mais ne te fie pas à ça pour des livrables critiques.</p>
+  </div>
+
+  <h3>3.3 Skills, la boîte à compétences mobilisables partout</h3>
+  <p>Une Skill est <strong>un savoir, un savoir-faire, ou un contexte que tu apprends à Claude une fois, et qu'il mobilise automatiquement quand tu en as besoin, dans n'importe quelle conversation et n'importe quel Project</strong>. Pas du code : un mode d'emploi en français, structuré.</p>
+  <p><strong>Une Skill, c'est avant tout un prompt sauvegardé.</strong> Elle suit les mêmes règles que tout bon prompt : un contexte, une mission, un format de sortie, des pièges à éviter, et souvent un rôle. La différence : tu l'écris une fois, et Claude la rappelle tout seul quand la situation s'y prête.</p>
+
+  <h4>Les trois formes d'une Skill</h4>
+  <p>Tu n'as pas à choisir l'une ou l'autre. Tu en auras des trois sortes au fil du temps.</p>
+  <p><strong>1. Une méthode.</strong> Une recette que Claude applique pour produire un livrable récurrent. "Comment je rédige une note de cadrage", "ma grille d'analyse fournisseur", "le format de mes pense-bêtes de point fixe". Tu décris la procédure, Claude la suit à l'identique.</p>
+  <p><strong>2. Un expert que tu convoques.</strong> Une Skill peut être un expert métier : un expert marketing, un expert comptable, un expert juridique, un expert CR. Il a son rôle, son savoir-faire, ses compétences, ses Connectors. Tu le sollicites dans n'importe quelle conversation, dans n'importe quel Project, et il prend la main. C'est exactement le levier "rôle" qu'on a vu en section 2, mais sauvegardé une fois pour toutes et appelé à la demande. Tu rédiges ton CR de comité de direction ? Tu convoques ton expert CR. Il sait comment tu structures, ce que tu retiens, ce que tu ignores.</p>
+  <p><strong>3. Un contexte permanent qui voyage avec toi.</strong> Le cas le plus puissant pour vous deux. Tu mets dans une Skill un bloc de contexte permanent : qui est RLVNT, l'actionnariat, le positionnement, les chiffres clés, les marques distribuées, les valeurs. Une fois cette Skill activée, Claude a la connaissance RLVNT en tête <strong>même hors d'un Project</strong>, même dans une conversation rapide depuis ton mobile. <strong>C'est la première Skill à créer.</strong></p>
+
+  <h4>Comment tu crées une Skill</h4>
+  <p>Tu crées une Skill <strong>avec Claude lui-même</strong>. Tu lui dis "je veux une Skill pour [intention]", il t'interviewe sur ta méthode, ton expert ou ton contexte, et il génère le mode d'emploi. Pas besoin de connaître la syntaxe technique. Tu lis le résultat, tu corriges ce qui dérive, tu valides. Le pas-à-pas est en section 5.2.</p>
+
+  <div class="card card-piege">
+    <div class="card-eyebrow">Piège</div>
+    <p style="margin-bottom: 0;">Ne crée pas une Skill pour un usage qui revient une fois par mois. Trop d'effort pour trop peu de gain. Crée une Skill quand tu retapes les mêmes consignes plusieurs fois par semaine (cas méthode), quand tu te dis souvent "je voudrais que Claude prenne le rôle de mon comptable" (cas expert), ou quand tu dois constamment réexpliquer qui est RLVNT (cas contexte).</p>
+  </div>
+
+  <h3>3.4 Connectors et MCP, Claude branché sur tes outils</h3>
+  <p>Un <strong>Connector</strong> est une passerelle officielle entre Claude et un outil que tu utilises déjà : Google Drive, Gmail, Outlook, Slack, Notion, HubSpot, et beaucoup d'autres. Une fois activé, Claude peut lire (et parfois écrire) les contenus de cet outil dans ses réponses, sans que tu fasses de copier-coller.</p>
+  <p><strong>MCP</strong>, c'est l'acronyme du Model Context Protocol. C'est la "norme technique" qui permet à n'importe quel outil de se connecter à Claude. Les Connectors officiels d'Anthropic sont des MCP. Mais MCP va plus loin : si un éditeur tiers ou un développeur expose son outil au format MCP, tu peux le brancher sur Claude. Concrètement, pour toi : tu rencontreras les <strong>Connectors</strong> dans ton interface Claude, et tu entendras parler de <strong>MCP</strong> quand on évoque des intégrations plus avancées (souvent côté tech, ou via des plugins).</p>
+  <p>Cas RLVNT typiques : Drive pour aller chercher des documents partagés, Gmail / Outlook pour traiter des mails ou rédiger des relances, ton CRM pour synthétiser un dossier client.</p>
+  <div class="card card-piege">
+    <div class="card-eyebrow">Piège</div>
+    <p style="margin-bottom: 0;">Activer un Connector, c'est donner à Claude une visibilité sur des données. Ce n'est pas anodin. <strong>Tu n'actives pas un Connector "au cas où"</strong>, tu l'actives quand tu as un besoin clair, sur un outil dont tu connais le périmètre de données.</p>
+  </div>
+
+  <h3>3.5 Research, l'investigation profonde</h3>
+  <p>Research est un <strong>mode où Claude mène une investigation multi-sources approfondie</strong> : il cherche, recoupe, structure, et produit une synthèse documentée avec ses sources. Compte 5 à 15 minutes selon la complexité du sujet. C'est l'équivalent d'un junior qui passe une demi-journée à creuser un dossier.</p>
+  <p>Tu mobilises Research quand tu as besoin d'une vraie synthèse documentée, pas d'un résumé rapide. Cas RLVNT typiques : veille sur un concurrent ou une marque émergente, analyse de tendances par segment (running, randonnée, snow), synthèse réglementaire avant une décision.</p>
+  <div class="card card-piege">
+    <div class="card-eyebrow">Piège</div>
+    <p style="margin-bottom: 0;">Research n'est pas un moteur de recherche déguisé. C'est un mode coûteux en temps et en tokens. Tu le réserves aux sujets où tu as besoin d'une vraie profondeur, pas pour vérifier un chiffre.</p>
+  </div>
+</section>
+
+<section class="seq" id="s4">
+  <div class="seq-header">
+    <div class="seq-tag">Section 4, le pivot</div>
+    <h2>Quel mode pour quoi : Chat, Cowork, Project, Skill</h2>
+    <p class="seq-lead">Le coeur du mémo. Comment positionner les briques entre elles, et choisir vite la bonne en fonction de ta tâche.</p>
+  </div>
+
+  <p class="pullquote">Anthropic le résume en une phrase : "Chat est une conversation que vous menez tour à tour. Cowork est une délégation : vous décrivez l'objectif, Claude travaille avec vos fichiers et outils, et vous revenez à un résultat fini."</p>
+
+  <p>L'axe distinctif n'est pas "tâche simple ou complexe", c'est <strong>conversation ou délégation</strong>. Tout part de là.</p>
+
+  <h3>4.1 La matrice à deux axes</h3>
+  <p>Quatre cases, quatre profils d'usage. À lire dans l'ordre, du plus quotidien au plus avancé.</p>
+  <table>
+    <thead>
+      <tr><th></th><th>Sans contexte permanent</th><th>Dans un Project</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Tu pilotes (Chat)</strong></td>
+        <td>Question ponctuelle, brouillon, brainstorming, reformulation rapide. Tu démarres, tu obtiens, tu fermes.</td>
+        <td>Sujet récurrent qui mérite un workspace dédié : revue trimestrielle, dossier RH, suivi marques. Le contexte se recharge tout seul à chaque conversation.</td>
+      </tr>
+      <tr>
+        <td><strong>Tu délègues (Cowork)</strong></td>
+        <td>Délégation ponctuelle qui touche à tes fichiers ou apps : préparer un PowerPoint depuis un dossier, remplir un formulaire dans un logiciel sans API.</td>
+        <td>Délégation récurrente sur un sujet permanent : digest hebdo, prep réunion à heure fixe, veille concurrentielle planifiée.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>Au-dessus de cette grille, deux couches transversales.</strong></p>
+  <p>Les <strong>Skills</strong> sont des compétences réutilisables (méthode, expert, contexte). Elles s'activent toutes seules dans n'importe quelle conversation, qu'elle soit en Chat, dans un Project, ou en Cowork. Tu en crées une fois, elle te suit partout.</p>
+  <p>Les <strong>Connectors</strong> (et plus largement le MCP) sont des passerelles vers tes outils (Drive, Gmail, Outlook, HubSpot, Slack, etc.). Eux aussi sont disponibles dans Chat, dans les Projects, et dans Cowork.</p>
+  <p>Donc Skills et Connectors ne sont pas un cinquième mode, ce sont des compagnons des quatre cases ci-dessus.</p>
+
+  <h3>4.2 L'arbre de décision, quatre questions dans l'ordre</h3>
+  <p>Quand tu hésites, pose-toi ces quatre questions. Elles te ramènent toujours au bon dispositif.</p>
+  <p><strong>Question 1, conversation ou délégation ?</strong><br>
+  Tu veux échanger tour à tour pour réfléchir, brainstormer, retravailler un texte ? Chat. Tu veux décrire un objectif, fermer ton Mac, et retrouver un livrable fini ? Cowork (à condition qu'au moins un des cinq cas Cowork s'applique, voir 4.3, sinon reste sur Chat).</p>
+  <p><strong>Question 2, sujet récurrent avec contexte permanent ?</strong><br>
+  Tu reviens régulièrement sur le même sujet (ton organigramme, tes chiffres clés, tes fournisseurs), et tu veux que Claude n'ait pas à tout réapprendre à chaque fois ? Project. Sinon, conversation libre.</p>
+  <p><strong>Question 3, procédure que tu refais souvent à l'identique ?</strong><br>
+  Tu retapes le même genre d'instructions dans tes prompts ("note de cadrage en 1 page, ton direct, pas de jargon", "tableau Quoi / Pourquoi / Quand") ? Skill. Sinon, prompt classique.</p>
+  <p><strong>Question 4, Claude doit lire ou écrire dans tes outils ?</strong><br>
+  Il a besoin de chercher dans Drive, Gmail, Outlook, ton CRM, etc. ? Connector ou MCP. Sinon, tu copies-colles ou tu joins le fichier.</p>
+
+  <h3>4.3 Les cinq cas où seul Cowork peut faire le travail</h3>
+  <p>C'est la liste qui justifie l'existence de Cowork à côté de Chat. Si aucune de ces cinq situations ne s'applique à ta tâche, <strong>Chat avec Skills et Connectors suffit, et c'est plus simple</strong>.</p>
+  <ul class="bignum-list">
+    <li>
+      <div class="bn">1</div>
+      <div class="bn-content">
+        <strong>Lire ou écrire dans tes dossiers locaux, sans upload ni download.</strong>
+        Cowork ouvre tes fichiers là où ils sont sur ton Mac, et y dépose ses livrables.
+      </div>
+    </li>
+    <li>
+      <div class="bn">2</div>
+      <div class="bn-content">
+        <strong>Naviguer dans ton navigateur déjà connecté</strong> (avec l'extension Claude in Chrome).
+        Portails fournisseurs, dashboards internes, formulaires derrière un login.
+      </div>
+    </li>
+    <li>
+      <div class="bn">3</div>
+      <div class="bn-content">
+        <strong>Opérer une app desktop native</strong>, type PowerPoint, Word, Excel, ou un logiciel métier sans API.
+      </div>
+    </li>
+    <li>
+      <div class="bn">4</div>
+      <div class="bn-content">
+        <strong>Travailler en parallèle</strong> sur des branches indépendantes d'une tâche : analyser cinq concurrents en simultané, vérifier vingt contrats dans un dossier d'un coup.
+      </div>
+    </li>
+    <li>
+      <div class="bn">5</div>
+      <div class="bn-content">
+        <strong>Tourner sur planning</strong> : la même tâche le lundi matin chaque semaine, ou tous les jours à 7h, sans que tu la déclenches.
+      </div>
+    </li>
+  </ul>
+
+  <h3>4.4 Le piège à connaître : Cowork est attaché à ton Mac</h3>
+  <p>C'est une nuance qu'il faut bien intégrer.</p>
+  <p><strong>Chat est synchronisé partout.</strong> Tes conversations Chat sont accessibles depuis claude.ai (web), depuis l'app mobile, et depuis le Desktop. La continuité passe aussi par la Memory, qui te suit entre appareils.</p>
+  <p><strong>Cowork tourne uniquement sur Claude Desktop.</strong> Il n'y a pas de version web de Cowork. Et le Mac doit rester allumé et l'app ouverte pendant que la tâche s'exécute. Tes conversations Cowork ne se retrouvent pas spontanément sur ton mobile.</p>
+  <p><strong>Dispatch</strong>, qui permet de déclencher et suivre une tâche Cowork depuis ton mobile, existe mais reste en <strong>bêta / research preview</strong>. Concrètement, à ce jour, ne bâtissez pas un usage critique dessus, attendez la stabilisation. Pour le mobile, restez sur Chat.</p>
+
+  <h3>4.5 Project ou Skill, la confusion classique</h3>
+  <p>Le piège : croire qu'un Project et une Skill se concurrencent. Ils répondent à deux questions différentes, et souvent on a besoin des deux.</p>
+  <p>Un <strong>Project</strong> te donne <strong>du contexte permanent sur un sujet</strong> : qui tu es, ce que tu fais, les chiffres, les fichiers, l'historique. Tu travailles "à l'intérieur" du Project.</p>
+  <p>Une <strong>Skill</strong> te donne <strong>une compétence mobilisable partout</strong> : une méthode pour produire un livrable récurrent, un expert métier avec son savoir-faire et ses outils, ou un bloc de contexte permanent (qui est RLVNT) qui voyage avec toi entre Projects et conversations.</p>
+  <div class="card card-retenir">
+    <div class="card-eyebrow">Le résumé court</div>
+    <p style="margin-bottom: 0;"><strong>Project</strong> = ce qui doit toujours être en tête sur ce sujet. <strong>Skill</strong> = une compétence, un expert, ou un contexte que tu mobilises à la demande, n'importe où.</p>
+  </div>
+  <p><strong>Règle de bascule pratique</strong> : si tu te retrouves à recopier les mêmes instructions dans plusieurs Projects, c'est que ces instructions sont en réalité une Skill.</p>
+
+  <h3>4.6 MCP / Connectors et Skills, la confusion suivante</h3>
+  <p>Même logique de complémentarité.</p>
+  <p>Un <strong>Connector ou MCP</strong> branche Claude sur un outil ou une donnée (Drive, Gmail, ton CRM, ta base produits).<br>
+  Une <strong>Skill</strong> dit à Claude <strong>quoi faire</strong> avec cette donnée.</p>
+  <p class="pullquote" style="font-size: 1.3rem;">MCP connecte Claude à la donnée. Skills apprend à Claude quoi en faire.</p>
+  <p>Les deux se cumulent : MCP pour la connectivité, Skills pour la méthode.</p>
+
+  <h3>4.7 Le mémo à garder en tête</h3>
+  <table>
+    <thead>
+      <tr><th>Tu veux</th><th>Tu utilises</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Réfléchir, brouillonner, échanger</td><td>Chat</td></tr>
+      <tr><td>Centraliser le contexte d'un sujet récurrent</td><td>Project</td></tr>
+      <tr><td>Industrialiser une méthode, un expert, ou un contexte mobilisable partout</td><td>Skill</td></tr>
+      <tr><td>Brancher Claude sur un outil que tu utilises déjà</td><td>Connector / MCP</td></tr>
+      <tr><td>Déléguer un livrable qui touche tes fichiers ou apps</td><td>Cowork</td></tr>
+      <tr><td>Que Claude bosse en autonomie quand tu n'es pas devant l'écran</td><td>Cowork avec scheduled task</td></tr>
+    </tbody>
+  </table>
+  <div class="card card-rupture">
+    <h4>La phrase à graver</h4>
+    <p class="manifeste">Avant d'aller dans Cowork, demande-toi si Chat avec une Skill et un Connector ferait le travail. Dans 8 cas sur 10, oui. Cowork, c'est pour les 2 cas restants.</p>
+  </div>
+</section>
+
+<section class="seq" id="s5">
+  <div class="seq-header">
+    <div class="seq-tag">Section 5</div>
+    <h2>Les pas-à-pas</h2>
+    <p class="seq-lead">Trois modes d'emploi indépendants. Tu les ouvres au moment où tu en as besoin. Chacun suit la même logique : déclencheur, 5 étapes, checklist, prompt prêt à copier.</p>
+  </div>
+
+  <h3>5.1 Créer un Project</h3>
+
+  <h4>Quand tu te lances</h4>
+  <p>Tu reviens régulièrement sur un même sujet (au moins une fois par semaine), et tu en as marre de tout réexpliquer. Tu as plusieurs documents qui décrivent ce sujet. Tu veux que Claude les ait toujours en tête.</p>
+
+  <h4>Les 5 étapes</h4>
+  <ul class="bignum-list">
+    <li>
+      <div class="bn">1</div>
+      <div class="bn-content">
+        <strong>Crée le Project.</strong>
+        Dans Claude, menu de gauche, "Projects" puis "Nouveau". Donne-lui un nom <strong>précis</strong> : "Pilotage France RLVNT", pas "Pilotage". Ajoute une description courte (à quoi sert ce Project).
+      </div>
+    </li>
+    <li>
+      <div class="bn">2</div>
+      <div class="bn-content">
+        <strong>Rédige les instructions permanentes.</strong>
+        C'est le brief que Claude lira au début de chaque conversation dans ce Project. Tu y mets : qui tu es, ton rôle, le contexte de RLVNT, le ton attendu, les règles à respecter, les pièges à éviter. Vise 200 à 400 mots, pas plus.
+      </div>
+    </li>
+    <li>
+      <div class="bn">3</div>
+      <div class="bn-content">
+        <strong>Charge la base de connaissances.</strong>
+        Les fichiers que Claude doit avoir sous la main : organigramme, plan stratégique, fiches de poste, dernières revues, chiffres clés. <strong>Important</strong> : ne charge que ce qui est utile à ce Project. Pas tout ton Drive.
+      </div>
+    </li>
+    <li>
+      <div class="bn">4</div>
+      <div class="bn-content">
+        <strong>Pose 3 questions test.</strong>
+        Pour vérifier que Claude a bien lu et compris. Exemple : "Donne-moi en 5 lignes ce que tu sais sur RLVNT à partir des documents fournis", "Quelles sont les 3 priorités stratégiques que tu identifies ?", "Quel est le ton attendu dans ce Project ?". Tu corriges les instructions si les réponses dérivent.
+      </div>
+    </li>
+    <li>
+      <div class="bn">5</div>
+      <div class="bn-content">
+        <strong>Utilise et fais évoluer.</strong>
+        Au fil des conversations, tu remarqueras des oublis, des incompréhensions, des consignes manquantes. Retourne dans les instructions et complète. Un bon Project se peaufine sur 2 à 3 semaines, pas en un jour.
+      </div>
+    </li>
+  </ul>
+
+  <h4>Checklist avant de lancer</h4>
+  <ul class="checks">
+    <li>Le Project a un nom précis et une finalité claire ?</li>
+    <li>Les instructions tiennent en 200 à 400 mots et incluent rôle, contexte, ton, règles ?</li>
+    <li>La base de connaissances est ciblée (pas un fourre-tout) ?</li>
+    <li>Tu as posé au moins 3 questions test ?</li>
+  </ul>
+
+  <h4>Pattern de prompt pour les instructions</h4>
+  <div class="prompt"><span class="prompt-label">Template instructions de Project</span><strong>RÔLE</strong>
+Tu es l'assistant de [prénom], qui [poste] chez RLVNT.
+Tu m'aides au quotidien sur [périmètre du Project].
+
+<strong>CONTEXTE</strong>
+RLVNT distribue [marques] sur [marchés], équipe de 7 personnes,
+basée à Bordeaux, actionnaire principal [actionnaire].
+Mes priorités à 12 mois sont [liste].
+
+<strong>TON ATTENDU</strong>
+Direct, factuel, sans jargon de consultant.
+Pas d'introduction du type "dans un contexte économique tendu".
+Si tu ne sais pas, dis-le, plutôt que d'inventer.
+
+<strong>RÈGLES</strong>
+- Quand je te demande une note, vise 1 page maximum sauf indication contraire.
+- Tout chiffre que tu cites doit être sourcé depuis les fichiers du Project.
+- Si une information manque pour bien répondre, demande-la avant de produire.</div>
+
+  <h3>5.2 Créer une Skill</h3>
+
+  <h4>La première Skill à créer</h4>
+  <p><strong>Avant tout, créez votre Skill "Contexte RLVNT".</strong> Avant les méthodes, avant les experts, avant n'importe quelle autre Skill.</p>
+  <p>Elle contient qui vous êtes, l'actionnariat, le positionnement, vos marques distribuées, vos chiffres clés, vos valeurs. Une fois cette Skill faite et activée, <strong>toutes vos conversations futures démarrent avec un Claude qui sait déjà chez qui il est</strong>, même hors d'un Project, même sur mobile, même en Cowork.</p>
+  <p>Tout le reste s'empile au-dessus : ensuite seulement, vous créerez des Skills <strong>méthode</strong> (vos formats récurrents) et des Skills <strong>expert</strong> (vos rôles métier sauvegardés). Les 5 étapes qui suivent valent pour n'importe laquelle des trois formes de Skill. Tu les déroules d'abord pour ta Skill Contexte, puis tu les ré-appliques pour chaque nouvelle Skill que tu créeras.</p>
+
+  <h4>Quand tu te lances (au-delà de la Skill Contexte)</h4>
+  <p>Tu te rends compte que tu retapes les mêmes consignes dans plusieurs conversations. Ou que tu refais la même tâche tous les lundis avec le même cadre mental. Ou qu'un livrable revient régulièrement avec la même structure attendue. Ou tu te dis souvent "j'aimerais convoquer mon expert [marketing / comptable / juridique]".</p>
+
+  <h4>Les 5 étapes</h4>
+  <ul class="bignum-list">
+    <li>
+      <div class="bn">1</div>
+      <div class="bn-content">
+        <strong>Identifie le bon candidat.</strong>
+        Une Skill se justifie si la tâche coche au moins 3 critères sur 5 : tu la fais au moins une fois par semaine, le cadrage est clair, le format de sortie est stable, tu sais reconnaître un bon livrable d'un mauvais, et tu es capable de décrire la méthode à un humain en moins de 10 minutes.
+      </div>
+    </li>
+    <li>
+      <div class="bn">2</div>
+      <div class="bn-content">
+        <strong>Lance l'interview avec Claude.</strong>
+        Tu lui dis "j'aimerais créer une Skill pour [tâche]. Interroge-moi pour comprendre comment je m'y prends." Il va te poser 5 à 10 questions sur ta méthode, le format attendu, les pièges à éviter. Réponds honnêtement, même quand c'est tâtonnant.
+      </div>
+    </li>
+    <li>
+      <div class="bn">3</div>
+      <div class="bn-content">
+        <strong>Valide le mode d'emploi qu'il génère.</strong>
+        À la fin de l'interview, Claude rédige la Skill : objectif, méthode, format, exemples, pièges. Lis-la attentivement. Corrige ce qui ne reflète pas vraiment ta façon de faire.
+      </div>
+    </li>
+    <li>
+      <div class="bn">4</div>
+      <div class="bn-content">
+        <strong>Teste sur un cas réel.</strong>
+        Donne à Claude une tâche qui devrait déclencher la Skill et regarde le résultat. Si la Skill produit ce que tu voulais, c'est bon. Si elle dérive, retourne dans le mode d'emploi et précise.
+      </div>
+    </li>
+    <li>
+      <div class="bn">5</div>
+      <div class="bn-content">
+        <strong>Itère 2 ou 3 fois.</strong>
+        Une Skill se polit à l'usage. Au 4ème ou 5ème usage, tu auras détecté les angles morts et tu les auras corrigés. Ensuite, elle s'autonomise.
+      </div>
+    </li>
+  </ul>
+
+  <h4>Checklist avant de lancer</h4>
+  <ul class="checks">
+    <li>La tâche coche au moins 3 critères sur 5 (récurrente, cadrée, format stable, bon/mauvais reconnaissable, méthode descriptible) ?</li>
+    <li>Tu as fait l'interview en mode discussion, pas en mode formulaire ?</li>
+    <li>Tu as testé sur au moins 2 cas réels ?</li>
+    <li>La Skill s'active toute seule quand la situation se présente, sans que tu la nommes explicitement ?</li>
+  </ul>
+
+  <h4>Pattern de prompt pour démarrer la création</h4>
+  <div class="prompt"><span class="prompt-label">Pattern d'amorce de Skill</span>J'aimerais créer une Skill pour [nom de la tâche, en une phrase].
+
+Voici le contexte :
+- Je fais cette tâche [fréquence].
+- Le livrable type est [format].
+- Les pièges classiques que je connais sont [liste].
+
+Avant de générer la Skill, interroge-moi pour comprendre :
+1. Mes critères de qualité.
+2. Les variantes selon le contexte.
+3. Ce que je ne veux jamais voir dans le livrable.
+
+Pose-moi tes questions une par une, et résume au fur et à mesure.</div>
+
+  <h3>5.3 Lancer une tâche Cowork</h3>
+
+  <h4>Quand tu te lances</h4>
+  <p>Tu as un livrable précis à produire, qui touche à tes fichiers locaux, à tes apps, ou qui demande à Claude d'agir en autonomie sur plusieurs sources. Tu acceptes que ça tourne 5 à 30 minutes pendant que tu fais autre chose.</p>
+
+  <h4>Les 5 étapes</h4>
+  <ul class="bignum-list">
+    <li>
+      <div class="bn">1</div>
+      <div class="bn-content">
+        <strong>Vérifie que c'est un cas Cowork.</strong>
+        Reprends les 5 cas Cowork de la section 4.3. Au moins un doit s'appliquer (fichiers locaux, navigateur connecté, app native, parallèle, planifié). Si aucun, reste sur Chat.
+      </div>
+    </li>
+    <li>
+      <div class="bn">2</div>
+      <div class="bn-content">
+        <strong>Active les Connectors et plugins utiles.</strong>
+        Ouvre Claude Desktop, mode Cowork. Vérifie que les Connectors dont tu as besoin sont actifs (Drive, Gmail, etc.). Si une Skill métier est utile pour cette tâche, vérifie qu'elle est disponible.
+      </div>
+    </li>
+    <li>
+      <div class="bn">3</div>
+      <div class="bn-content">
+        <strong>Rédige le brief Cowork.</strong>
+        Cinq blocs : Contexte (qui tu es, sur quoi tu travailles), Tâche (verbe d'action plus objet précis), Sources (Connectors et fichiers à utiliser), Format de sortie (structure exacte, longueur, type de fichier, où sauvegarder), Pièges à éviter (ne pas inventer, ne pas paraphraser, points de validation).
+      </div>
+    </li>
+    <li>
+      <div class="bn">4</div>
+      <div class="bn-content">
+        <strong>Lance et laisse tourner.</strong>
+        Cowork affiche dans la sidebar chaque action prise. Tu peux interrompre à tout moment. Cowork demande ta validation avant les actions sensibles (envoyer un mail, modifier un fichier hors de ton dossier de travail). Ne sois pas tenté de tout valider en aveugle.
+      </div>
+    </li>
+    <li>
+      <div class="bn">5</div>
+      <div class="bn-content">
+        <strong>Lis et corrige le livrable.</strong>
+        Le résultat est rarement parfait du premier coup. Reformule, demande une variante, pointe les erreurs. Si le livrable est bon mais que tu vois que tu vas relancer cette tâche chaque semaine, transforme-la en scheduled task : Cowork la rejouera à l'identique, à l'heure et au jour que tu fixes.
+      </div>
+    </li>
+  </ul>
+
+  <h4>Checklist avant de lancer</h4>
+  <ul class="checks">
+    <li>Au moins un des 5 cas Cowork s'applique à ta tâche ?</li>
+    <li>Tu as Claude Desktop ouvert sur le Mac qui doit faire le travail ?</li>
+    <li>Le Mac va rester allumé pendant la durée estimée ?</li>
+    <li>Les Connectors nécessaires sont actifs ?</li>
+    <li>Le brief comporte bien les 5 blocs (Contexte, Tâche, Sources, Format, Pièges) ?</li>
+  </ul>
+
+  <h4>Pattern de tâche Cowork</h4>
+  <div class="prompt"><span class="prompt-label">Template de brief Cowork</span><strong>CONTEXTE</strong>
+Je co-dirige RLVNT, distribution sport et outdoor, équipe de 7.
+Aujourd'hui je prépare [livrable] pour [destinataire / échéance].
+
+<strong>TÂCHE</strong>
+[Verbe d'action + objet précis].
+Concrètement, je veux que tu :
+1. [Action 1, par exemple "lis tous les mails Outlook reçus depuis lundi
+    en provenance de [domaine fournisseur]"]
+2. [Action 2, par exemple "extrais les 3 sujets récurrents et les
+    demandes en attente de réponse"]
+3. [Action 3, par exemple "produis une note de synthèse à classer
+    dans /Documents/RLVNT/Fournisseurs/synthese.md"]
+
+<strong>SOURCES</strong>
+- Outlook (via Connector)
+- Dossier local /Documents/RLVNT/Fournisseurs
+
+<strong>FORMAT DE SORTIE</strong>
+- Note Markdown, 1 page maximum.
+- Structure : (1) sujets récurrents, (2) demandes en attente,
+  (3) recommandation d'action.
+- Sauvegarde dans le chemin indiqué.
+
+<strong>PIÈGES À ÉVITER</strong>
+- N'invente pas de chiffres.
+- Ne paraphrase pas, cite les phrases sources si nécessaire.
+- Demande-moi validation avant tout envoi de mail ou modification
+  hors du dossier indiqué.</div>
+</section>
+
+<section class="seq" id="s6">
+  <div class="seq-header">
+    <div class="seq-tag">Section 6</div>
+    <h2>Limites et règles d'or</h2>
+    <p class="seq-lead">Ce qu'il faut savoir pour ne pas vous mettre en risque. Trois sujets, plus trois règles d'or applicables dès demain.</p>
+  </div>
+
+  <h3>6.1 Hallucinations, pourquoi et que faire</h3>
+  <p>Claude (comme tous les assistants IA) peut <strong>halluciner</strong>. Le terme est officiel, pas alarmiste. Il décrit un phénomène précis : Claude peut produire <strong>une information qui ressemble à une réponse plausible mais qui est factuellement fausse</strong>. Pas par malveillance, par construction. Un modèle de langage prédit le mot le plus probable suivant le précédent. Sur les sujets pointus ou peu documentés, il peut inventer.</p>
+  <p><strong>Où ça hallucine le plus</strong> : sur les chiffres précis (chiffre d'affaires, parts de marché, dates exactes), sur les citations et références (articles, livres, articles de loi), sur les sujets de niche.</p>
+  <h4>Quatre actions concrètes pour réduire le risque</h4>
+  <ol>
+    <li><strong>Demande explicitement les sources.</strong> "Cite tes sources" ou "ne me donne que des informations que tu peux sourcer". Claude est meilleur quand il est forcé à se justifier.</li>
+    <li><strong>Active la recherche web</strong> quand tu as besoin de faits actualisés (cours d'une action, dernier rapport, actualité d'un concurrent).</li>
+    <li><strong>Vérifie les chiffres importants avant de les utiliser.</strong> Toujours. Surtout dans une note destinée à un actionnaire, un client, ou ton équipe.</li>
+    <li><strong>Travaille avec tes propres données</strong> via un Project, une Skill contexte, ou un Connector. Quand Claude lit ton fichier, il ne hallucine pas le contenu, il le résume ou l'analyse.</li>
+  </ol>
+  <p class="pullquote">Claude est excellent pour structurer la pensée. Moyen pour produire des faits précis. Distinguez les deux usages, vous éviterez 95 % des problèmes.</p>
+
+  <h3>6.2 Fraîcheur des données et recherche web</h3>
+  <p>Claude a une <strong>date de cutoff</strong> de connaissance, c'est la date au-delà de laquelle son entraînement s'arrête. Tout ce qui s'est passé après, il ne le sait pas, sauf si tu lui donnes l'information.</p>
+  <p>Pour tout ce qui peut avoir évolué récemment (cours d'une action, dernier rapport, actualité concurrent, version produit, réglementation), <strong>active la recherche web</strong> ou demande explicitement à Claude s'il a besoin de vérifier en ligne.</p>
+  <p>Même avec la recherche web, Claude reste capable d'erreurs : il peut mal interpréter une source ou citer un article ancien comme s'il était récent. La règle reste la même : <strong>vérifie ce qui compte avant de l'utiliser</strong>.</p>
+
+  <h3>6.3 Confidentialité, ce que Claude voit</h3>
+  <p>Le sujet le plus sérieux pour des dirigeants de PME : qu'est-ce qui sort de chez RLVNT quand vous parlez à Claude ?</p>
+  <p><strong>Où vont les données.</strong> Le contenu transite par les serveurs d'Anthropic, aux États-Unis, avec des options de résidence européenne selon le plan.</p>
+  <p><strong>Anthropic les utilise-t-elle pour entraîner ses modèles ?</strong> Sur les plans <strong>Enterprise et Team</strong>, par défaut <strong>non</strong>. Sur les plans Pro et gratuits, les politiques varient, à vérifier dans la documentation à jour. C'est une raison de plus pour passer en plan Team si vous étendez Claude à toute l'équipe.</p>
+  <p><strong>Combien de temps sont-elles conservées ?</strong> Anthropic publie des durées de rétention spécifiques par plan, à consulter dans la <em>Privacy Policy</em>.</p>
+
+  <h3>6.4 Les trois règles de gouvernance RLVNT</h3>
+  <p>Pas une charte de 30 pages, pas un comité de pilotage. Trois règles que vous pouvez adopter dès demain.</p>
+  <ul class="bignum-list">
+    <li>
+      <div class="bn">1</div>
+      <div class="bn-content">
+        <strong>Le bon plan, si Claude est étendu à toute l'entreprise.</strong>
+        Un plan Team. Pas de comptes Pro individuels disséminés dans les équipes. Centralisé, protégé, traçable. Les comptes individuels c'est tentant au début, c'est ingérable à 12 mois : pas de visibilité sur les usages, pas de garantie sur la rétention des données, pas de moyen de retirer un accès quand quelqu'un quitte la société.
+      </div>
+    </li>
+    <li>
+      <div class="bn">2</div>
+      <div class="bn-content">
+        <strong>Pas de secrets dans les prompts.</strong>
+        Mots de passe, tokens, clés API, identifiants bancaires : bannis. Jamais collés dans un prompt ni dans un fichier chargé dans un Project ou une Skill. C'est non négociable. Le reste (noms de clients, conditions commerciales, dossiers RH internes, comptes rendus stratégiques) peut passer sans problème dans un plan Team d'entreprise.
+      </div>
+    </li>
+    <li>
+      <div class="bn">3</div>
+      <div class="bn-content">
+        <strong>Vérification des chiffres importants.</strong>
+        Tout chiffre qui finit dans une note, un mail à un client, une présentation, est vérifié avant d'être utilisé. Pas d'exception. Vous gardez la responsabilité de ce que vous diffusez. Claude ne la prend pas à votre place.
+      </div>
+    </li>
+  </ul>
+
+  <h3>6.5 Le mémo de section</h3>
+  <div class="card card-rupture">
+    <h4>Manifeste</h4>
+    <p class="manifeste">Claude n'est pas un coffre-fort. Mais ce n'est pas non plus une fuite ouverte. Avec le bon plan et trois règles simples, l'usage est compatible avec une PME de 7 personnes. Le risque n'est pas Claude. Le risque, c'est l'usage non encadré.</p>
+  </div>
+</section>
+
+<section class="seq" id="memos">
+  <div class="seq-header">
+    <div class="seq-tag">Annexes</div>
+    <h2>Mémos à épingler</h2>
+    <p class="seq-lead">Cinq encadrés à garder sous la main. À épingler à côté de l'écran, ajouter dans votre Skill "Contexte RLVNT", ou imprimer en aide-mémoire.</p>
+  </div>
+
+  <div class="memo-block">
+    <div class="memo-num">Mémo 1</div>
+    <h4>La structure d'un bon prompt</h4>
+    <p><strong>Trois mots dans la tête.</strong></p>
+    <p><strong>Contexte</strong> : qui je suis, où je suis, à qui je parle.<br>
+    <strong>Tâche</strong> : qu'est-ce que je veux exactement qu'il produise.<br>
+    <strong>Format</strong> : sous quelle forme la réponse doit arriver.</p>
+    <p>Et un réflexe : la première réponse, c'est un brouillon. Le vrai travail commence après.</p>
+  </div>
+
+  <div class="memo-block">
+    <div class="memo-num">Mémo 2</div>
+    <h4>Quel mode pour quoi</h4>
+    <p><strong>Tu veux réfléchir, brouillonner, échanger</strong> &rarr; Chat<br>
+    <strong>Tu veux centraliser le contexte d'un sujet récurrent</strong> &rarr; Project<br>
+    <strong>Tu veux industrialiser une méthode, un expert, ou un contexte mobilisable partout</strong> &rarr; Skill<br>
+    <strong>Tu veux brancher Claude sur un outil que tu utilises déjà</strong> &rarr; Connector / MCP<br>
+    <strong>Tu veux déléguer un livrable qui touche tes fichiers ou tes apps</strong> &rarr; Cowork<br>
+    <strong>Tu veux que Claude bosse en autonomie quand tu n'es pas devant l'écran</strong> &rarr; Cowork avec scheduled task</p>
+    <p><strong>La règle d'or</strong> : Cowork, c'est pour ce que Chat ne peut pas faire. Le reste du temps, tu restes dans Chat avec une Skill et un Connector. Plus simple, et ça te suit partout.</p>
+  </div>
+
+  <div class="memo-block">
+    <div class="memo-num">Mémo 3</div>
+    <h4>Les trois formes d'une Skill</h4>
+    <p>Une Skill peut être :</p>
+    <p><strong>Une méthode.</strong> Une recette que Claude applique pour produire un livrable récurrent.<br>
+    <strong>Un expert.</strong> Un rôle métier sauvegardé (expert marketing, comptable, juridique, CR), avec son savoir-faire et ses Connectors, que tu convoques à la demande.<br>
+    <strong>Un contexte.</strong> Un bloc de connaissance permanent (qui est RLVNT) qui voyage avec toi entre Projects et conversations.</p>
+    <p><strong>La première à créer : ta Skill "Contexte RLVNT".</strong> Toutes les conversations futures démarrent avec un Claude qui sait déjà chez qui il est.</p>
+  </div>
+
+  <div class="memo-block">
+    <div class="memo-num">Mémo 4</div>
+    <h4>Les trois règles de gouvernance RLVNT</h4>
+    <p><strong>1. Le bon plan, si Claude est étendu à toute l'entreprise.</strong><br>
+    Un plan Team. Pas de comptes Pro individuels disséminés.</p>
+    <p><strong>2. Pas de secrets dans les prompts.</strong><br>
+    Mots de passe, tokens, clés API, identifiants bancaires : bannis. Le reste passe.</p>
+    <p><strong>3. Vérification des chiffres importants.</strong><br>
+    Tout chiffre qui finit dans une note ou un mail est vérifié avant.</p>
+  </div>
+
+  <p class="transition">Maintenant, le vrai travail commence : c'est dans votre quotidien que la valeur se confirmera.</p>
+</section>
+
+</div>
+</main>
+</div>
+<script>
+(function(){
+  const links = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const setActive = (link) => {
+    links.forEach(l => l.classList.remove('active'));
+    if (link) link.classList.add('active');
+  };
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top);
+    if (visible.length) setActive(map.get(visible[0].target));
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  map.forEach((_, el) => observer.observe(el));
+})();
+</script>
+</body>
+</html>
