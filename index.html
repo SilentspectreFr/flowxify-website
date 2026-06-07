@@ -221,8 +221,8 @@
             box-shadow: 0 1px 24px rgba(26,26,46,0.05);
         }
         .fx-nav .wrap { display: flex; justify-content: space-between; align-items: center; }
-        .fx-nav-logo { height: 58px; width: auto; transition: height var(--dur-fast) var(--ease-out); }
-        .fx-nav.scrolled .fx-nav-logo { height: 48px; }
+        .fx-nav-logo { height: 96px; width: auto; transition: height var(--dur-fast) var(--ease-out); }
+        .fx-nav.scrolled .fx-nav-logo { height: 64px; }
         .fx-nav-link {
             font-size: 0.92rem; font-weight: 500; color: var(--text-body);
             text-decoration: none; letter-spacing: 0.01em; position: relative;
@@ -280,6 +280,8 @@
 
         @media (max-width: 900px) {
             .fx-nav-toggle { display: inline-flex; }
+            .fx-nav-logo { height: 72px; }
+            .fx-nav.scrolled .fx-nav-logo { height: 56px; }
         }
         @media (min-width: 901px) {
             .fx-mobile-menu { display: none; }
@@ -324,13 +326,28 @@
         }
         .fx-dot-success { width: 9px; height: 9px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
 
-        /* ── Logos clients ── */
-        .fx-logo-wall { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2.6rem 3.8rem; }
-        .fx-logo-img { height: 46px; width: auto; max-width: 172px; object-fit: contain; display: block; }
+        /* ── Logos clients (bandeau défilant en boucle) ── */
+        .fx-marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+        }
+        .fx-marquee-track { display: flex; width: max-content; animation: fx-marquee 45s linear infinite; }
+        .fx-marquee:hover .fx-marquee-track { animation-play-state: paused; }
+        .fx-marquee-group { display: flex; align-items: center; gap: 4.5rem; padding-right: 4.5rem; }
+        @keyframes fx-marquee {
+            from { transform: translateX(-33.3333%); }
+            to   { transform: translateX(0); }
+        }
+        .fx-logo-img { height: 68px; width: auto; max-width: 240px; object-fit: contain; display: block; }
         .fx-tlogo-img { height: 30px; width: auto; max-width: 124px; object-fit: contain; display: block; }
         @media (max-width: 560px) {
-            .fx-logo-wall { gap: 2rem 2.6rem; }
-            .fx-logo-img { height: 38px; max-width: 132px; }
+            .fx-logo-img { height: 50px; max-width: 180px; }
+            .fx-marquee-group { gap: 2.8rem; padding-right: 2.8rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fx-marquee-track { animation: none; }
+            .fx-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
         }
 
         /* ── Stats (bandeau sombre) ── */
@@ -575,17 +592,44 @@
         <div class="reveal" style="text-align:center;margin-bottom:2.6rem;">
             <span class="fx-eyebrow">Ils me font confiance</span>
         </div>
-        <div class="reveal fx-logo-wall">
-            <img class="fx-logo-img" src="clientlogos/marie-blachere.webp" alt="Marie Blachère" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/milly-la-foret.webp" alt="Commune de Milly-la-Forêt" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/serum-digital.webp" alt="Serum Digital" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/optimiz.webp" alt="Optimiz Group" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/uniforme-prestige.webp" alt="Uniforme Prestige" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/rlvnt.webp" alt="RLVNT" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/dafonline.webp" alt="Dafonline" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/fulchiron.webp" alt="Fulchiron" loading="lazy">
-            <img class="fx-logo-img" src="clientlogos/multimat.webp" alt="Multimat" loading="lazy">
-        </div>
+    </div>
+    <div class="reveal fx-marquee">
+            <div class="fx-marquee-track">
+                <div class="fx-marquee-group">
+                    <img class="fx-logo-img" src="clientlogos/marie-blachere.webp" alt="Marie Blachère">
+                    <img class="fx-logo-img" src="clientlogos/milly-la-foret.webp" alt="Commune de Milly-la-Forêt">
+                    <img class="fx-logo-img" src="clientlogos/serum-digital.webp" alt="Serum Digital">
+                    <img class="fx-logo-img" src="clientlogos/optimiz.webp" alt="Optimiz Group">
+                    <img class="fx-logo-img" src="clientlogos/uniforme-prestige.webp" alt="Uniforme Prestige">
+                    <img class="fx-logo-img" src="clientlogos/rlvnt.webp" alt="RLVNT">
+                    <img class="fx-logo-img" src="clientlogos/dafonline.webp" alt="Dafonline">
+                    <img class="fx-logo-img" src="clientlogos/fulchiron.webp" alt="Fulchiron">
+                    <img class="fx-logo-img" src="clientlogos/multimat.webp" alt="Multimat">
+                </div>
+                <!-- Doublons nécessaires à la boucle infinie, masqués aux lecteurs d'écran -->
+                <div class="fx-marquee-group" aria-hidden="true">
+                    <img class="fx-logo-img" src="clientlogos/marie-blachere.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/milly-la-foret.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/serum-digital.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/optimiz.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/uniforme-prestige.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/rlvnt.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/dafonline.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/fulchiron.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/multimat.webp" alt="">
+                </div>
+                <div class="fx-marquee-group" aria-hidden="true">
+                    <img class="fx-logo-img" src="clientlogos/marie-blachere.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/milly-la-foret.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/serum-digital.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/optimiz.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/uniforme-prestige.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/rlvnt.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/dafonline.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/fulchiron.webp" alt="">
+                    <img class="fx-logo-img" src="clientlogos/multimat.webp" alt="">
+                </div>
+            </div>
     </div>
 </section>
 
