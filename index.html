@@ -113,6 +113,7 @@
             line-height: 1.65;
             color: var(--text-body);
             background: var(--surface);
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
         }
@@ -166,10 +167,16 @@
         .fx-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .fx-nav-links { display: flex; gap: 2rem; align-items: center; }
 
+        /* Empêche les pistes de grille de déborder du conteneur (CTA nowrap, mots longs) */
+        .fx-hero-grid > *, .fx-mission > *, .fx-contact-grid > * { min-width: 0; }
+
         @media (max-width: 900px) {
             .fx-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             .fx-mission, .fx-contact-grid { grid-template-columns: 1fr; gap: 2rem; }
             .fx-nav-links { display: none; }
+            .fx-nav-right { display: none !important; }
+            /* photo hero : contrainte + centrée pour éviter un cadrage maladroit */
+            .fx-hero-visual { max-width: 360px; margin: 0 auto; padding-bottom: 1.5rem; }
         }
         @media (max-width: 760px) {
             .section { padding: 4rem 0; }
@@ -177,7 +184,10 @@
             .fx-stats { grid-template-columns: 1fr; }
             .fx-form-grid { grid-template-columns: 1fr; }
             .wrap, .wrap-narrow { padding: 0 1.4rem; }
-            .fx-portal { display: none !important; }
+            /* les gros CTA passent en pleine largeur et peuvent passer à la ligne — pas de débordement horizontal */
+            .fx-cta-row { width: 100%; }
+            .fx-cta-row > * { flex: 1 1 100%; }
+            .fx-cta-row a[href], .fx-cta-row button { width: 100%; justify-content: center; white-space: normal; }
         }
 
         /* ── Boutons ── */
@@ -233,6 +243,47 @@
             transition: all var(--dur-fast) var(--ease-out);
         }
         .fx-portal:hover { border-color: var(--accent); background: var(--fx-violet-tint); color: var(--accent-hover); }
+
+        /* ── Nav mobile (hamburger + panneau déroulant) ── */
+        .fx-nav.open { background: rgba(255,255,255,0.92); border-bottom-color: transparent; }
+        .fx-nav-toggle {
+            display: none; width: 44px; height: 44px; align-items: center; justify-content: center;
+            background: none; border: 1px solid var(--border-subtle); border-radius: var(--radius-xs);
+            cursor: pointer; color: var(--text-strong); padding: 0;
+        }
+        .fx-nav-toggle:focus-visible { outline: 2px solid var(--accent-warm); outline-offset: 3px; }
+        .fx-burger { position: relative; width: 20px; height: 14px; }
+        .fx-burger span {
+            position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px;
+            background: currentColor; transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+        }
+        .fx-burger span:nth-child(1) { top: 0; }
+        .fx-burger span:nth-child(2) { top: 6px; }
+        .fx-burger span:nth-child(3) { top: 12px; }
+        .fx-nav-toggle[aria-expanded="true"] .fx-burger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .fx-nav-toggle[aria-expanded="true"] .fx-burger span:nth-child(2) { opacity: 0; }
+        .fx-nav-toggle[aria-expanded="true"] .fx-burger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+        .fx-mobile-menu {
+            overflow: hidden; max-height: 0; opacity: 0;
+            transition: max-height 0.32s var(--ease-out), opacity 0.24s var(--ease-out);
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid transparent;
+        }
+        .fx-mobile-menu.open { max-height: 460px; opacity: 1; border-bottom-color: rgba(229,231,235,0.8); }
+        .fx-mobile-inner { padding: 0.6rem 1.4rem 1.6rem; display: flex; flex-direction: column; gap: 0.2rem; }
+        .fx-mobile-link {
+            font-size: 1.05rem; font-weight: 500; color: var(--text-strong); text-decoration: none;
+            padding: 0.85rem 0.2rem; border-bottom: 1px solid var(--border-subtle);
+        }
+        .fx-mobile-link:active { color: var(--accent); }
+
+        @media (max-width: 900px) {
+            .fx-nav-toggle { display: inline-flex; }
+        }
+        @media (min-width: 901px) {
+            .fx-mobile-menu { display: none; }
+        }
 
         /* ── Hero ── */
         .fx-orb {
@@ -453,6 +504,26 @@
             </a>
             <a href="#contact" class="btn btn-primary btn-sm">Premier échange</a>
         </div>
+        <button type="button" class="fx-nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="fx-burger"><span></span><span></span><span></span></span>
+        </button>
+    </div>
+    <div class="fx-mobile-menu" id="mobile-menu">
+        <div class="fx-mobile-inner">
+            <a href="#constat" class="fx-mobile-link">Le constat</a>
+            <a href="#methode" class="fx-mobile-link">La méthode</a>
+            <a href="#deroule" class="fx-mobile-link">Le déroulé</a>
+            <a href="#temoignages" class="fx-mobile-link">Témoignages</a>
+            <a href="https://rapports.flowxify.com" target="_blank" rel="noopener" class="fx-mobile-link" style="display:inline-flex;align-items:center;gap:0.55rem;color:var(--accent);font-weight:600;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                Portail client
+            </a>
+            <div style="margin-top:1.1rem;">
+                <a href="#contact" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;white-space:normal;">Prendre un premier échange (30 min)</a>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -470,7 +541,7 @@
                 <p class="fx-hero-exp">
                     Plus de <strong>20 ans</strong> dans des fonctions business et de direction — pilotage, structuration, outils utiles.
                 </p>
-                <div class="fx-hero-ctas">
+                <div class="fx-hero-ctas fx-cta-row">
                     <a href="#contact" class="btn btn-primary btn-lg">Prendre un premier échange (30 min)</a>
                     <a href="#methode" class="btn btn-ghost btn-lg">Découvrir la méthode <span aria-hidden="true">→</span></a>
                 </div>
@@ -824,7 +895,7 @@
                         <label for="f-site">Site web</label>
                         <input id="f-site" name="site_web" type="text" tabindex="-1" autocomplete="off">
                     </div>
-                    <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">
+                    <div class="fx-cta-row" style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">
                         <button type="submit" class="btn btn-primary btn-lg" id="form-submit">Prendre un premier échange (30 min)</button>
                         <a href="https://calendly.com/fjouvin/30min" target="_blank" rel="noopener" style="font-size:0.9rem;font-weight:600;">ou réserver directement →</a>
                     </div>
@@ -907,6 +978,19 @@
         const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 32);
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
+
+        /* Menu mobile (hamburger) */
+        const toggle = document.getElementById('nav-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const setMenu = (open) => {
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+            mobileMenu.classList.toggle('open', open);
+            nav.classList.toggle('open', open);
+        };
+        toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        window.addEventListener('resize', () => { if (window.innerWidth > 900) setMenu(false); });
 
         /* Formulaire contact → n8n */
         const WEBHOOK_URL = 'https://n8n.srv904495.hstgr.cloud/webhook/flowxify-contact';
