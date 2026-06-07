@@ -114,6 +114,27 @@
             box-shadow: 0 4px 12px rgba(80, 4, 164, 0.15);
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+        }
+
+        nav a.nav-link {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a.nav-link:hover {
+            color: var(--color-accent);
+        }
+
         /* ── LAYOUT ── */
         section {
             padding: var(--section-py) var(--section-px);
@@ -827,6 +848,9 @@
             }
 
             .nav-logo { height: 72px; }
+            .nav-links { gap: 1rem; }
+            nav a.nav-link { font-size: 0.78rem; }
+            nav a.nav-cta { padding: 0.5rem 0.9rem; font-size: 0.78rem; }
             .section-contrast h2 { font-size: 1.6rem; }
             .partipris-key { font-size: 1.15rem; }
             .method-step { padding: 1.5rem; }
@@ -842,7 +866,10 @@
 <!-- ════════════════ NAV ════════════════ -->
 <nav>
     <img src="logo.png" alt="Flowxify" class="nav-logo">
-    <a href="#contact" class="nav-cta">Prendre un premier échange</a>
+    <div class="nav-links">
+        <a href="https://rapports.flowxify.com" class="nav-link">Espace clients</a>
+        <a href="#contact" class="nav-cta">Prendre un premier échange</a>
+    </div>
 </nav>
 
 <main>
